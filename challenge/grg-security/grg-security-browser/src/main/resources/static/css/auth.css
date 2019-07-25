@@ -1,0 +1,38 @@
+body{
+    background: #f9f9f9;
+}
+.auth-box{
+    margin-top: 80px;
+    padding:30px 40px;
+    background: #f3f3f3;
+    border-radius: 4px;
+    box-shadow: 15px -10px 10px 0px rgba(200,200,200,0.5);
+}
+
+.code-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0;
+    margin:15px -15px;
+}
+.code-box>input[name='imageCode']{
+    display: block;
+    width: 50%;
+}
+
+.code-box .action-wrap{
+    width: 50%;
+    margin-left: 25px;
+}
+.code-box .action-wrap .action-item{
+    width: 100%;
+    float: right;
+}
+
+#codeImg{
+    border:1px solid #eee;
+    border-radius: 4px;
+    cursor: pointer;
+
+}

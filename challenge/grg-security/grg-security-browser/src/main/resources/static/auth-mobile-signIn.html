@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xs-8 col-md-offset-4 col-xs-offset-2 auth-box">
+            <h3 class="auth-title">Please sign in</h3>
+            <form class="form-horizontal" role="form" action="/authentication/mobile" method="post">
+                <div class="form-group form-mobile">
+                    <input type="text" class="form-control" id="mobile" name="mobile" value="18780183730" placeholder="Phone number"
+                           data-container="body" data-toggle="popover">
+                </div>
+                <div class="form-group code-box">
+                    <input type="text" class="form-control" name="smsCode" placeholder="sms code" >
+                    <div class="action-wrap">
+                        <button  type="button" class="btn btn-primary action-item" onclick="sendSms()" >send code</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-inline">
+                        <label>
+                            <input name="remember-me" class="form-check-input" type="checkbox" value="true">Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">Sign</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function sendSms() {
+        let pattern =/^1[3456789]\d{9}$/;
+        let value = $("#mobile").val();
+        if (value === null || value==="") {
+            console.log("电话号码不能为空")
+            return;
+        }
+        if (!pattern.test(value)) {
+            console.log("电话号码格式不正确")
+            return;
+        }
+        setTime($(".action-item"),60);
+        $.get("/code/sms?mobile=" + value, function (data, status) {
+
+        });
+    }
+
+    function setTime(val,time=60) {
+        let countdown=time;
+        if (countdown === 0) {
+            val.attr("disabled",false);
+            val.text("send code");
+            val.css("pointer-events","auto");
+            countdown = time;
+        } else {
+            val.attr("disabled", true);
+            val.text ("resend(" + countdown + ")");
+            val.css("pointer-events","none");
+            countdown--;
+            setTimeout(function () {
+                setTime(val,countdown);
+            }, 1000)
+
+        }
+    }
+</script>
+</body>
+</html>
