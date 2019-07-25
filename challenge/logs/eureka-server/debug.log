@@ -1,0 +1,47 @@
+2019-07-25 14:42:14,917 [main] INFO  [com.grg.eureka.GrgEurekaApplication] SpringApplication.java:675 - No active profile set, falling back to default profiles: default
+2019-07-25 14:42:16,105 [main] WARN  [o.springframework.boot.actuate.endpoint.EndpointId] EndpointId.java:135 - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-07-25 14:42:16,394 [main] INFO  [o.springframework.cloud.context.scope.GenericScope] GenericScope.java:295 - BeanFactory id=2bfaa41c-3654-3f11-8c5b-36678c1a7b27
+2019-07-25 14:42:16,497 [main] INFO  [o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker] PostProcessorRegistrationDelegate.java:330 - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$3ea367e0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-25 14:42:16,953 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:90 - Tomcat initialized with port(s): 1021 (http)
+2019-07-25 14:42:16,966 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Initializing ProtocolHandler ["http-nio-1021"]
+2019-07-25 14:42:16,988 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Starting service [Tomcat]
+2019-07-25 14:42:16,988 [main] INFO  [org.apache.catalina.core.StandardEngine] DirectJDKLog.java:173 - Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-07-25 14:42:17,225 [main] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring embedded WebApplicationContext
+2019-07-25 14:42:17,225 [main] INFO  [org.springframework.web.context.ContextLoader] ServletWebServerApplicationContext.java:296 - Root WebApplicationContext: initialization completed in 2288 ms
+2019-07-25 14:42:17,345 [main] WARN  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:121 - No URLs will be polled as dynamic configuration sources.
+2019-07-25 14:42:17,346 [main] INFO  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:122 - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-07-25 14:42:17,367 [main] INFO  [com.netflix.config.DynamicPropertyFactory] DynamicPropertyFactory.java:281 - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@d23d6a
+2019-07-25 14:42:18,534 [main] INFO  [c.s.j.server.impl.application.WebApplicationImpl] WebApplicationImpl.java:815 - Initiating Jersey application, version 'Jersey: 1.19.1 03/11/2016 02:08 PM'
+2019-07-25 14:42:18,611 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:70 - Using JSON encoding codec LegacyJacksonJson
+2019-07-25 14:42:18,613 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:71 - Using JSON decoding codec LegacyJacksonJson
+2019-07-25 14:42:18,729 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:80 - Using XML encoding codec XStreamXml
+2019-07-25 14:42:18,729 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:81 - Using XML decoding codec XStreamXml
+2019-07-25 14:42:19,100 [main] WARN  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:121 - No URLs will be polled as dynamic configuration sources.
+2019-07-25 14:42:19,100 [main] INFO  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:122 - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-07-25 14:42:19,318 [main] INFO  [o.s.scheduling.concurrent.ThreadPoolTaskExecutor] ExecutorConfigurationSupport.java:171 - Initializing ExecutorService 'applicationTaskExecutor'
+2019-07-25 14:42:20,042 [main] INFO  [o.s.cloud.netflix.eureka.InstanceInfoFactory] InstanceInfoFactory.java:72 - Setting initial instance status as: STARTING
+2019-07-25 14:42:20,080 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:365 - Initializing Eureka in region us-east-1
+2019-07-25 14:42:20,080 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:368 - Client configured to neither register nor query for data.
+2019-07-25 14:42:20,086 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:381 - Discovery Client initialized at timestamp 1564036940085 with initial instances count: 0
+2019-07-25 14:42:20,117 [main] INFO  [com.netflix.eureka.DefaultEurekaServerContext] DefaultEurekaServerContext.java:63 - Initializing ...
+2019-07-25 14:42:20,120 [main] WARN  [com.netflix.eureka.cluster.PeerEurekaNodes] PeerEurekaNodes.java:155 - The replica size seems to be empty. Check the route 53 DNS Registry
+2019-07-25 14:42:20,135 [main] INFO  [c.netflix.eureka.registry.AbstractInstanceRegistry] AbstractInstanceRegistry.java:151 - Finished initializing remote region registries. All known remote regions: []
+2019-07-25 14:42:20,136 [main] INFO  [com.netflix.eureka.DefaultEurekaServerContext] DefaultEurekaServerContext.java:70 - Initialized
+2019-07-25 14:42:20,145 [main] INFO  [o.s.b.actuate.endpoint.web.EndpointLinksResolver] EndpointLinksResolver.java:59 - Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-07-25 14:42:20,251 [main] INFO  [o.s.c.n.e.serviceregistry.EurekaServiceRegistry] EurekaServiceRegistry.java:41 - Registering application EUREKA-SERVER with eureka with status UP
+2019-07-25 14:42:20,257 [Thread-27] INFO  [o.s.c.netflix.eureka.server.EurekaServerBootstrap] EurekaServerBootstrap.java:110 - Setting the eureka configuration..
+2019-07-25 14:42:20,258 [Thread-27] INFO  [o.s.c.netflix.eureka.server.EurekaServerBootstrap] EurekaServerBootstrap.java:115 - Eureka data center value eureka.datacenter is not set, defaulting to default
+2019-07-25 14:42:20,258 [Thread-27] INFO  [o.s.c.netflix.eureka.server.EurekaServerBootstrap] EurekaServerBootstrap.java:129 - Eureka environment value eureka.environment is not set, defaulting to test
+2019-07-25 14:42:20,266 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Starting ProtocolHandler ["http-nio-1021"]
+2019-07-25 14:42:20,277 [Thread-27] INFO  [o.s.c.netflix.eureka.server.EurekaServerBootstrap] EurekaServerBootstrap.java:188 - isAws returned false
+2019-07-25 14:42:20,278 [Thread-27] INFO  [o.s.c.netflix.eureka.server.EurekaServerBootstrap] EurekaServerBootstrap.java:153 - Initialized server context
+2019-07-25 14:42:20,278 [Thread-27] INFO  [c.n.eureka.registry.PeerAwareInstanceRegistryImpl] PeerAwareInstanceRegistryImpl.java:241 - Got 1 instances from neighboring DS node
+2019-07-25 14:42:20,279 [Thread-27] INFO  [c.n.eureka.registry.PeerAwareInstanceRegistryImpl] PeerAwareInstanceRegistryImpl.java:242 - Renew threshold is: 1
+2019-07-25 14:42:20,279 [Thread-27] INFO  [c.n.eureka.registry.PeerAwareInstanceRegistryImpl] PeerAwareInstanceRegistryImpl.java:253 - Changing status to UP
+2019-07-25 14:42:20,304 [Thread-27] INFO  [o.s.c.n.e.s.EurekaServerInitializerConfiguration] EurekaServerInitializerConfiguration.java:74 - Started Eureka Server
+2019-07-25 14:42:20,323 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:204 - Tomcat started on port(s): 1021 (http) with context path ''
+2019-07-25 14:42:20,324 [main] INFO  [o.s.c.n.e.s.EurekaAutoServiceRegistration] EurekaAutoServiceRegistration.java:145 - Updating port to 1021
+2019-07-25 14:42:20,325 [main] INFO  [com.grg.eureka.GrgEurekaApplication] StartupInfoLogger.java:59 - Started GrgEurekaApplication in 7.568 seconds (JVM running for 8.86)
+2019-07-25 14:42:20,505 [RMI TCP Connection(2)-127.0.0.1] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-07-25 14:42:20,506 [RMI TCP Connection(2)-127.0.0.1] INFO  [org.springframework.web.servlet.DispatcherServlet] FrameworkServlet.java:524 - Initializing Servlet 'dispatcherServlet'
+2019-07-25 14:42:20,517 [RMI TCP Connection(2)-127.0.0.1] INFO  [org.springframework.web.servlet.DispatcherServlet] FrameworkServlet.java:546 - Completed initialization in 11 ms
