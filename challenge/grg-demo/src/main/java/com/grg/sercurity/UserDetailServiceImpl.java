@@ -23,8 +23,9 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component("userDetailService")
+//@Component
 @Primary
-public class UserDetailServiceImpl implements UserDetailServiceChoose, SocialUserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService, SocialUserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,7 +40,7 @@ public class UserDetailServiceImpl implements UserDetailServiceChoose, SocialUse
                 true,
                 true,
                 true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
         return user;
     }
 
@@ -60,11 +61,11 @@ public class UserDetailServiceImpl implements UserDetailServiceChoose, SocialUse
                 true,
                 true,
                 true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
     }
 
-    @Override
-    public String getType() {
-        return ServiceType.DEFAULT.name();
-    }
+//    @Override
+//    public String getType() {
+//        return ServiceType.DEFAULT.name();
+//    }
 }

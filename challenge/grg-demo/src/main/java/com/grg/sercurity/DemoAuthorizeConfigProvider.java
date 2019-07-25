@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class DemoAuthorizeConfigProvider implements AuthorizeConfigProvider {
     @Override
     public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
-        config.antMatchers(HttpMethod.POST,"/user/register").permitAll();
+        config.antMatchers("/oauth/**").permitAll();
         return false;
     }
 }

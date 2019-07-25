@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @author tjshan
  * @date 2019/7/23 18:27
  */
-@Configuration
-@EnableResourceServer
+//@Configuration
+//@EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired

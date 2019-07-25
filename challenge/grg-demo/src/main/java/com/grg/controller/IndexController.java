@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019/7/19 22:28
  */
 @RestController
-public class IndexContrller {
+public class    IndexController {
 
     @Autowired
     private ProviderSignInUtils providerSignInUtils;

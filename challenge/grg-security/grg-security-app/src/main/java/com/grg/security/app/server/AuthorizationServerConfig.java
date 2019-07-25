@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -28,8 +29,8 @@ import java.util.List;
  * @author tjshan
  * @date 2019/7/22 19:56
  */
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+//@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -51,6 +52,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private SecurityProperties securityProperties;
 
+    /**
+     * 异常转换
+     */
+    @Autowired
+    private WebResponseExceptionTranslator webResponseExceptionTranslator;
+
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -71,15 +78,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
             endpoints.tokenEnhancer(enhancerChain)
                     .accessTokenConverter(jwtAccessTokenConverter);
+            endpoints.exceptionTranslator(webResponseExceptionTranslator);
         }
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         super.configure(security);
+        security
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
-
-
 
     /**
      * 客户端配置
@@ -89,6 +99,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+
+
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         if (ArrayUtils.isNotEmpty(securityProperties.getOauth2().getClients())) {
             for (OAuth2ClientProperties config : securityProperties.getOauth2().getClients()) {

@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class UserDetailServiceProviderImpl implements UserDetailsServiceProvider{
 
-    @Autowired
+    @Autowired(required=true)
     List<UserDetailServiceChoose> userDetailServiceChooses;
 
     @Override
