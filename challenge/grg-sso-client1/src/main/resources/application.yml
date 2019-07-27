@@ -1,0 +1,29 @@
+security:
+  oauth2:
+    client:
+      clientId: challenge1
+      clientSecret: challengeSecret1
+      user-authorization-uri: http://www.qixingshe.xyz:8010/server/oauth/authorize
+      access-token-uri: http://www.qixingshe.xyz:8010/server/oauth/token
+    resource:
+      jwt:
+        key-uri: http://www.qixingshe.xyz:8010/server/oauth/token_key
+server:
+  port: 8011
+  servlet:
+    context-path: /client1
+
+spring:
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://challenge-db:3306/challenge_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: challenge
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+  main:
+    allow-bean-definition-overriding: true
+

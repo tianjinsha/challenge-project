@@ -107,15 +107,4 @@ public class SecurityController {
         return new R(RespCode.INVALID_SESSION, message);
     }
 
-
-    @GetMapping("/me")
-    public Object me(@AuthenticationPrincipal UserDetails user) {
-        return user;
-    }
-
-    @GetMapping("/info")
-    public Object info(Principal principal) {
-        Authentication authentication = (Authentication) principal;
-        return authentication.getPrincipal();
-    }
 }

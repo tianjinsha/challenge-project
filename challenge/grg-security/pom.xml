@@ -13,12 +13,14 @@
 
     <properties>
         <kaptcha.version>2.3.2</kaptcha.version>
+        <jwt.verson>0.9.0</jwt.verson>
     </properties>
 
     <modules>
         <module>grg-security-core</module>
         <module>grg-security-browser</module>
         <module>grg-security-app</module>
+        <module>grg-security-sso</module>
     </modules>
 
     <dependencies>
@@ -32,6 +34,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
         </dependency>
         <!-- spring-social -start -->
         <dependency>

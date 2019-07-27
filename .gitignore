@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HELP.md
 target/
 logs、
@@ -30,3 +31,43 @@ build/
 
 ### VS Code ###
 .vscode/
+=======
+# maven ignore
+target/
+*.war
+*.ear
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# logs #
+logs
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.java~
+*.properties~
+*.xml~
+
+# system ignore
+.DS_Store
+Thumbs.db
+Servers
+.metadata
+upload
+>>>>>>> 1ec096d180d64300eef9ad989cc35a7324bfc631

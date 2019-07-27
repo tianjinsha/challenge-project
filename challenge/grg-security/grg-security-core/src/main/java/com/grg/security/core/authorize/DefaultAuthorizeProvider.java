@@ -29,8 +29,7 @@ public class DefaultAuthorizeProvider  implements AuthorizeConfigProvider{
                 SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                 securityProperties.getBrowser().getLoginPage(),
                 securityProperties.getBrowser().getRegisterPage(),
-                securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                "/css/**","/js/**")
+                securityProperties.getBrowser().getSession().getSessionInvalidUrl())
                 .permitAll();
 
         if (StringUtils.isNotBlank(securityProperties.getBrowser().getSignOutUrl())) {
