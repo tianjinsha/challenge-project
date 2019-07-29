@@ -1,0 +1,39 @@
+ <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>2.0.5.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+		
+
+#spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          okta:
+#            client-id: challenge2
+#            clientSecret: challengeSecret2
+#        provider:
+#          okta:
+#            authorization-uri: http://www.qixingshe.xyz:8010/server/oauth/authorize
+#            token-uri : http://www.qixingshe.xyz:8010/server/oauth/token
+#            jwk-set-uri : http://www.qixingshe.xyz:8010/server/oauth/token_key
+
+
+ /**
+     * 配置默认的AuthenticationManager
+     * 再2.x中没有找不到bean
+     * @return
+     * @throws Exception
+     */
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+	
+	
+	
+	  @Autowired
+    private AuthenticationManager authenticationManager;
