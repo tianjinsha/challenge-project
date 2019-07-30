@@ -62,8 +62,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
                  oauthServer
 //                         .allowFormAuthenticationForClients()
-                         .tokenKeyAccess("permitAll()")
-                         .checkTokenAccess("isAuthenticated()");
+                         .tokenKeyAccess("isAuthenticated()")
+                         .checkTokenAccess("permitAll()");
              }
 
     @Override
