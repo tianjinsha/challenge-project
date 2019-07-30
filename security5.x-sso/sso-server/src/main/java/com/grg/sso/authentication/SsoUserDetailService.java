@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author tjshan
  * @date 2019/7/26 18:48
  */
-//@Component("userDetailService")
+@Component("userDetailService")
 @Slf4j
 public class SsoUserDetailService implements UserDetailsService {
 

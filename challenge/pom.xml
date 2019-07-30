@@ -10,12 +10,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-        <spring-platform.version>Cairo-SR8</spring-platform.version>
+        <spring-cloud.version>Finchley.SR4</spring-cloud.version>
+        <spring-platform.version>Cairo-SR6</spring-platform.version>
 
         <fastjson.version>1.2.58</fastjson.version>
     </properties>
@@ -66,8 +66,13 @@
     </dependencyManagement>
 
     <modules>
-
+        <module>grg-eureka</module>
+        <module>grg-common</module>
         <module>grg-security</module>
+        <module>grg-app-demo</module>
+        <module>grg-sso-server</module>
+        <module>grg-sso-client1</module>
+        <module>grg-sso-client2</module>
     </modules>
 
     <build>

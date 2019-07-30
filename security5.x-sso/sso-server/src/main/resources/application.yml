@@ -1,9 +1,2 @@
 server:
   port: 8010
-#  servlet:
-#    context-path: /server
-
-#security:
-#  user:
-#    name: admin
-#    password: 123456

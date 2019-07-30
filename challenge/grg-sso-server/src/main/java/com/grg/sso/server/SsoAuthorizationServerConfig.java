@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -31,17 +32,13 @@ import java.util.concurrent.TimeUnit;
  * @author tjshan
  * @date 2019/7/26 16:48
  */
+@Order(6)
 @Configuration
 @EnableAuthorizationServer
 public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    @Qualifier("userDetailService")
-    private UserDetailsService userDetailsService;
-
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -50,12 +47,14 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
                 .secret("challengeSecret1")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("all")
+                .redirectUris("http://www.qixingshe.xyz:8011/client1/login")
                 .autoApprove(true)
-                .and()
+                    .and()
                 .withClient("challenge2")
                 .secret("challengeSecret2")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("all")
+                .redirectUris("http://www.qixingshe.xyz:8011/client1/login")
                 .autoApprove(true);
     }
 
@@ -63,24 +62,7 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(jwtTokenStore())
                 .accessTokenConverter(jwtAccessTokenConverter())
-                .authenticationManager(authenticationManager)
-                .accessTokenConverter(jwtAccessTokenConverter())
-                .userDetailsService(userDetailsService)
-                //支持GET  POST  请求获取token
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST,HttpMethod.OPTIONS)
-                 //开启刷新token
-                .reuseRefreshTokens(true);
-//                .tokenServices(tokenServices());
-
-        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-        List<TokenEnhancer> enhancers = new ArrayList<>();
-        enhancers.add(jwtTokenEnhancer());
-        enhancers.add(jwtAccessTokenConverter());
-
-        enhancerChain.setTokenEnhancers(enhancers);
-
-        endpoints.tokenEnhancer(enhancerChain)
-                .accessTokenConverter(jwtAccessTokenConverter());
+                .authenticationManager(authenticationManager);
     }
 
     /**
@@ -89,8 +71,9 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        security.tokenKeyAccess("isAuthenticated()");
-//        security.checkTokenAccess("isAuthenticated()");
+        security.tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 
     @Bean
@@ -105,22 +88,9 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
         return converter;
     }
 
-    /**
-     * 重写默认的资源服务token
-     * @return
-     */
-//    @Bean
-//    public DefaultTokenServices tokenServices() {
-//        final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-//        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
-//        defaultTokenServices.setTokenStore(jwtTokenStore());
-//        defaultTokenServices.setSupportRefreshToken(true);
-//        defaultTokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30));
-//        return defaultTokenServices;
-//    }
 
     @Bean
-//    @ConditionalOnBean(TokenEnhancer.class)
+    @ConditionalOnBean(TokenEnhancer.class)
     public TokenEnhancer jwtTokenEnhancer(){
         return new AppJwtTokenEnhancer();
     }

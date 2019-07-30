@@ -5,7 +5,7 @@ spring:
   application:
     name: challenge-demo
   datasource:
-    driver-class-name:  com.mysql.cj.jdbc.Driver
+    driver-class-name:  com.mysql.jdbc.Driver
     url: jdbc:mysql://challenge-db:3306/challenge_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: challenge
     password: 123456

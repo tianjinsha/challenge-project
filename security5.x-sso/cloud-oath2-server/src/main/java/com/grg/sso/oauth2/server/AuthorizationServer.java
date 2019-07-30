@@ -41,6 +41,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .authorities("ROLE_ADMIN")
                 .redirectUris("https://www.baidu.com")
                 .scopes("all")
+                .autoApprove(true)
                     .and()
                 .withClient("client2")
                 .secret(passwordEncoder.encode("secret2"))
@@ -48,13 +49,15 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .authorities("ROLE_ADMIN")
                 .redirectUris("https://www.baidu.com")
                 .scopes("all")
+                .autoApprove(true)
                     .and()
                 .withClient("client3")
                 .secret(passwordEncoder.encode("secret3"))
                 .authorizedGrantTypes("client_credentials","refresh_token")
                 .authorities("ROLE_ADMIN")
                 .redirectUris("https://www.baidu.com")
-                .scopes("all");
+                .scopes("all")
+                .autoApprove(true);
 
     }
 

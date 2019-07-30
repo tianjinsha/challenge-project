@@ -3,8 +3,8 @@ package com.grg.sso.server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -12,12 +12,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * @author tjshan
  * @date 2019/7/26 16:48
  */
+@Order(6)
 @Configuration
 @EnableAuthorizationServer
 public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -31,41 +33,48 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         /* 配置token获取合验证时的策略 */
-        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
-        security.allowFormAuthenticationForClients();
+        security.tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 配置oauth2的 client信息
-        // authorizedGrantTypes 有4种，这里只开启2种
-        // secret密码配置从 Spring Security 5.0开始必须以 {bcrypt}+加密后的密码 这种格式填写
         clients.inMemory()
-                .withClient("a")
-                .secret(passwordEncoder.encode("a"))
-                .scopes("test")
+                .withClient("client1")
+                .secret(passwordEncoder.encode("secret1"))
+                .scopes("all")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
+                .redirectUris("http://www.qixingshe.xyz:8011/client1/login")
                 .autoApprove(true)
-                .and()
-                .withClient("b")
-                .secret(passwordEncoder.encode("b"))
-                .scopes("test")
+                    .and()
+                .withClient("client2")
+                .secret(passwordEncoder.encode("secret2"))
+                .scopes("all")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
+                .redirectUris("http://www.qixingshe.xyz:8012/client2/login")
                 .autoApprove(true);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         // 配置tokenStore
-        endpoints.authenticationManager(authenticationManager).tokenStore(memoryTokenStore());
+        endpoints
+                .authenticationManager(authenticationManager)
+                .tokenStore(jwtTokenStore())
+                .accessTokenConverter(jwtAccessTokenConverter());
     }
 
-
-    // 使用最基本的InMemoryTokenStore生成token
     @Bean
-    public TokenStore memoryTokenStore() {
-        return new InMemoryTokenStore();
+    public TokenStore jwtTokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter(){
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("challenge");
+        return converter;
+    }
 
 }

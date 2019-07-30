@@ -1,26 +1,11 @@
 auth-server: http://www.qixingshe.xyz:8010
 
-#security:
-#  oauth2:
-#    client:
-#      clientId: challenge1
-#      clientSecret: challengeSecret1
-#      user-authorization-uri: http://www.qixingshe.xyz:8010/server/oauth/authorize
-#      access-token-uri: http://www.qixingshe.xyz:8010/server/oauth/token
-#    resource:
-#      jwt:
-#        key-uri: http://www.qixingshe.xyz:8010/server/oauth/token_key
-#      user-info-uri: http://www.qixingshe.xyz:8010/user
-
-
-
-
 security:
   oauth2:
     client:
-      client-id: a # 授权服务器配置的client id
-      client-secret: a # 授权服务器配置的client secret
-      scope: test
+      client-id: client1 # 授权服务器配置的client id
+      client-secret: secret1 # 授权服务器配置的client secret
+      scope: all
       access-token-uri: ${auth-server}/oauth/token # 获取access token接口
       user-authorization-uri: ${auth-server}/oauth/authorize #  获取Authorization Code接口
     resource:

@@ -16,10 +16,5 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableOAuth2Sso
 public class ClientWebsecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**").authorizeRequests()
-                .anyRequest().authenticated();
-    }
 }
 

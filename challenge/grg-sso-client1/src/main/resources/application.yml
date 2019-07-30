@@ -1,13 +1,15 @@
+auth-server: http://www.qixingshe.xyz:8010/server
+
 security:
   oauth2:
     client:
       clientId: challenge1
       clientSecret: challengeSecret1
-      user-authorization-uri: http://www.qixingshe.xyz:8010/server/oauth/authorize
-      access-token-uri: http://www.qixingshe.xyz:8010/server/oauth/token
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
     resource:
       jwt:
-        key-uri: http://www.qixingshe.xyz:8010/server/oauth/token_key
+        key-uri: ${auth-server}/oauth/token_key
 server:
   port: 8011
   servlet:
@@ -15,7 +17,7 @@ server:
 
 spring:
   datasource:
-    driver-class-name:  com.mysql.cj.jdbc.Driver
+    driver-class-name:  com.mysql.jdbc.Driver
     url: jdbc:mysql://challenge-db:3306/challenge_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: challenge
     password: 123456
