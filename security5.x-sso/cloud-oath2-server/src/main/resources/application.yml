@@ -1,0 +1,25 @@
+server:
+  servlet:
+    session:
+      cookie:
+        name: session-challenge
+  port: 8080
+logging:
+  level:
+    root: info
+
+
+auth-server-url: http://www.qixingshe.xyz:8080 # 授权服务地址
+
+
+security:
+  oauth2:
+    client:
+      client-id: client2
+      client-secret: secret2
+      scope: all
+      access-token-uri: ${auth-server-url}/oauth/token
+      user-authorization-uri: ${auth-server-url}/oauth/authorize
+    resource:
+      token-info-uri: ${auth-server-url}/oauth/check_token #检查令牌
+
