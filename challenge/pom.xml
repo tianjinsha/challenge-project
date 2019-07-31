@@ -17,6 +17,7 @@
         <spring-cloud.version>Finchley.SR4</spring-cloud.version>
         <spring-platform.version>Cairo-SR6</spring-platform.version>
 
+        <eureka.version>1.4.2.RELEASE</eureka.version>
         <fastjson.version>1.2.58</fastjson.version>
     </properties>
 
