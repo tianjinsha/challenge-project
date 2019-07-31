@@ -18,7 +18,9 @@
         <spring-platform.version>Cairo-SR6</spring-platform.version>
 
         <eureka.version>1.4.2.RELEASE</eureka.version>
+        <zuul.version>1.4.2.RELEASE</zuul.version>
         <fastjson.version>1.2.58</fastjson.version>
+        <jwt.verson>0.9.0</jwt.verson>
     </properties>
 
     <dependencies>
@@ -74,6 +76,8 @@
         <module>grg-sso-server</module>
         <module>grg-sso-client1</module>
         <module>grg-sso-client2</module>
+        <module>grg-gateway</module>
+        <module>grg-zuul</module>
     </modules>
 
     <build>

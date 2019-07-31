@@ -1,0 +1,28 @@
+server:
+  port: 2024
+
+spring:
+  application:
+    name: auth-server
+  redis:
+    host: challenge-redis
+    port: 6379
+    password:
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 30
+  client:
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://challenge:challenge@challenge-eureka:2010/eureka
+
+challenge:
+  security:
+    oauth2:
+      storeType: jwt
+
