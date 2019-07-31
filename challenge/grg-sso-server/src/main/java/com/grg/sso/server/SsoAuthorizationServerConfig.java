@@ -2,31 +2,22 @@ package com.grg.sso.server;
 
 import com.grg.sso.jwt.AppJwtTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author tjshan
@@ -38,23 +29,32 @@ import java.util.concurrent.TimeUnit;
 public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
+
+    /**
+     * redis连接工厂
+     */
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("challenge1")
-                .secret("challengeSecret1")
+                .secret(passwordEncoder.encode("challengeSecret1"))
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("all")
                 .redirectUris("http://www.qixingshe.xyz:8011/client1/login")
                 .autoApprove(true)
                     .and()
                 .withClient("challenge2")
-                .secret("challengeSecret2")
+                .secret(passwordEncoder.encode("challengeSecret2"))
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("all")
-                .redirectUris("http://www.qixingshe.xyz:8011/client1/login")
+                .redirectUris("http://www.qixingshe.xyz:8012/client2/login")
                 .autoApprove(true);
     }
 
@@ -78,6 +78,7 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Bean
     public TokenStore jwtTokenStore() {
+//        return new AppRedisTokenStore(redisConnectionFactory);
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
