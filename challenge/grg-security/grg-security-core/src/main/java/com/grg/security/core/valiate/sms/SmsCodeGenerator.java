@@ -1,7 +1,7 @@
 package com.grg.security.core.valiate.sms;
 
 import com.grg.security.core.valiate.ValidateCode;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.valiate.ValidateCodeGenerator;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

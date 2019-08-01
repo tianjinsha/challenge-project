@@ -2,8 +2,8 @@ package com.grg.security.browser.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grg.common.util.R;
-import com.grg.security.core.properties.ResponseType;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.ResponseType;
+import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpStatus;

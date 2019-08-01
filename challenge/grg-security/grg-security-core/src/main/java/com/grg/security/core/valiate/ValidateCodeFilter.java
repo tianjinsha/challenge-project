@@ -1,7 +1,7 @@
 package com.grg.security.core.valiate;
 
-import com.grg.security.core.properties.SecurityConstants;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;

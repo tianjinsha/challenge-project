@@ -1,4 +1,4 @@
-package com.grg.security.core.properties;
+package com.grg.security.common.properties;
 import lombok.Data;
 
 /**

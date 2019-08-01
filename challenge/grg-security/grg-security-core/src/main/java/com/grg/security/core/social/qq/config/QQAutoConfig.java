@@ -1,7 +1,7 @@
 package com.grg.security.core.social.qq.config;
 
-import com.grg.security.core.properties.QQProperties;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.QQProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.social.qq.connect.QQConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

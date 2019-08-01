@@ -27,8 +27,8 @@ public class IndexController {
     }
 
     @GetMapping("/user")
-    public Object user(Authentication authentication) {
-        return authentication;
+    public Object user() {
+        return "not authorize";
     }
 
     @GetMapping("/me")
@@ -38,10 +38,8 @@ public class IndexController {
 
         Claims claims = Jwts.parser().setSigningKey(JWT_SIGNING_KEY.getBytes("UTF-8"))
                 .parseClaimsJws(token).getBody();
-        // 拿到自定义增强的参数
-        String company = (String) claims.get("topic");
 
-        log.info(company);
+        log.info(claims.toString());
 
         return user;
     }

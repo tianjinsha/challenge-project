@@ -21,6 +21,8 @@
         <module>grg-security-browser</module>
         <module>grg-security-app</module>
         <module>grg-security-sso</module>
+        <module>grg-security-resource</module>
+        <module>grg-security-common</module>
     </modules>
 
     <dependencies>

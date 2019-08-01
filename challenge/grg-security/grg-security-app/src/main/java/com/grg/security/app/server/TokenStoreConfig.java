@@ -1,7 +1,7 @@
 package com.grg.security.app.server;
 
 import com.grg.security.app.jwt.AppJwtTokenEnhancer;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

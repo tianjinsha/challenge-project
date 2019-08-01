@@ -3,7 +3,7 @@ package com.grg.security.browser;
 import com.grg.security.core.authentication.FormAuthenticationConfig;
 import com.grg.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.grg.security.core.authorize.AuthorizeConfigManager;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.valiate.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

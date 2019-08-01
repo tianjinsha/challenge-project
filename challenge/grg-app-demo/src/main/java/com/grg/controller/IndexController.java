@@ -1,7 +1,7 @@
 package com.grg.controller;
 
 import com.grg.model.User;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;

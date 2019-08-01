@@ -35,7 +35,7 @@ public class AppAccessDeniedHandler  implements AccessDeniedHandler {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setHeader("Content-Type", "application/json;charset=utf-8");
 
-        R<Object> r = new R<>(RespCode.FAIL, HttpStatus.BAD_REQUEST.getReasonPhrase());
+        R<Object> r = new R<>(RespCode.FAIL, HttpStatus.FORBIDDEN.getReasonPhrase());
         response.getWriter().write(objectMapper.writeValueAsString(r));
         response.getWriter().flush();
     }

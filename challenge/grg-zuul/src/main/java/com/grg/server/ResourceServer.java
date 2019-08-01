@@ -9,8 +9,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * @author tjshan
  * @date 2019/7/31 19:34
  */
-@Configuration
-@EnableResourceServer
+//@Configuration
+//@EnableResourceServer
 public class ResourceServer extends ResourceServerConfigurerAdapter {
 
     @Override

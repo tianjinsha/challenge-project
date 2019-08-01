@@ -26,3 +26,5 @@ challenge:
     oauth2:
       storeType: jwt
 
+
+

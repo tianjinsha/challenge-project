@@ -1,5 +1,8 @@
 package com.grg.authentication;
 
+import com.grg.common.vo.UserVO;
+import com.grg.feign.UserService;
+import com.grg.util.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,19 +22,12 @@ import org.springframework.stereotype.Service;
 public class AuthUserDetailService implements UserDetailsService {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("zuul登录用户名为:" + username);
-        String password = passwordEncoder.encode("admin");
-        User user = new User(username,
-                password,
-                true,
-                true,
-                true,
-                true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
-        return user;
+        log.info("auth 登录用户名为:" + username);
+        UserVO userVO = userService.findUserByUsername(username);
+        return new UserDetailsImpl(userVO);
     }
 }

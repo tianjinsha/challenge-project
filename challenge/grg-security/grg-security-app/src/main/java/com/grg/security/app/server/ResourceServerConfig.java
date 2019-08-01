@@ -3,14 +3,13 @@ package com.grg.security.app.server;
 import com.grg.security.app.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import com.grg.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.grg.security.core.authorize.AuthorizeConfigManager;
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 import com.grg.security.core.valiate.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

@@ -1,7 +1,7 @@
 package com.grg.security.core.valiate.sms;
 
 import com.grg.security.core.valiate.ValidateCode;
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 import com.grg.security.core.valiate.impl.AbstractValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

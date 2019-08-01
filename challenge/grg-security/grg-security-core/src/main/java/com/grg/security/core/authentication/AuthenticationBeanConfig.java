@@ -2,7 +2,7 @@ package com.grg.security.core.authentication;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

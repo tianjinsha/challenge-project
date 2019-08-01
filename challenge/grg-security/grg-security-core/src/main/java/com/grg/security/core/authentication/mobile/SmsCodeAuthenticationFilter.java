@@ -1,6 +1,6 @@
 package com.grg.security.core.authentication.mobile;
 
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
