@@ -23,6 +23,7 @@
         <module>grg-security-sso</module>
         <module>grg-security-resource</module>
         <module>grg-security-common</module>
+        <module>grg-security-authorize</module>
     </modules>
 
     <dependencies>
