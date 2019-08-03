@@ -14,5 +14,8 @@ public enum ResponseType {
      * 返回json
      */
     JSON,
-
+    /**
+     * 返回页面
+     */
+    HTML
 }

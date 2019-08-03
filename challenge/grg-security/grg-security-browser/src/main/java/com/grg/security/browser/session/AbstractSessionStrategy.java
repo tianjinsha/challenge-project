@@ -3,6 +3,7 @@ package com.grg.security.browser.session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grg.common.util.R;
 import com.grg.common.util.RespCode;
+import com.grg.security.common.properties.ResponseType;
 import com.grg.security.common.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +58,8 @@ public class AbstractSessionStrategy {
         String sourceUrl = request.getRequestURI();
         String targetUrl;
 
-        if (StringUtils.endsWithIgnoreCase(sourceUrl, SUFFIX)) {
+        if (StringUtils.endsWithIgnoreCase(sourceUrl, SUFFIX)
+                || securityProperties.getBrowser().getResponseType().equals(ResponseType.HTML)) {
             targetUrl = destinationUrl + SUFFIX;
             log.info("session失效,跳转到" + targetUrl);
             redirectStrategy.sendRedirect(request, response, targetUrl);

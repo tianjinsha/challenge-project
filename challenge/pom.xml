@@ -24,6 +24,7 @@
         <jwt.verson>0.9.0</jwt.verson>
         <mybatis-plus.version>2.3.3</mybatis-plus.version>
         <ttl.version>2.2.0</ttl.version>
+        <hutool.version>3.3.2</hutool.version>
     </properties>
 
     <dependencies>

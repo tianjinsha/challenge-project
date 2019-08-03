@@ -29,8 +29,8 @@ zuul:
 security:
   oauth2:
     client:
-      client-id: client2
-      client-secret: secret2
+      client-id: challenge
+      client-secret: challengeSecret
       scope: all
       access-token-uri: ${auth-server-url}/oauth/token
       user-authorization-uri: ${auth-server-url}/oauth/authorize
@@ -44,3 +44,4 @@ challenge:
     ignore:
       urls:
         - /user
+

@@ -9,5 +9,9 @@ import org.springframework.social.security.SocialAuthenticationFilter;
  */
 public interface SocialAuthenticationFilterPostProcessor {
 
+    /**
+     * 设置成功处理器
+     * @param socialAuthenticationFilter
+     */
     void process(SocialAuthenticationFilter socialAuthenticationFilter);
 }

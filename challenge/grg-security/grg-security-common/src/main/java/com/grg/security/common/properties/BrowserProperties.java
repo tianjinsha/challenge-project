@@ -15,9 +15,14 @@ public class BrowserProperties {
     private SessionProperties session = new SessionProperties();
 
     /**
-     * 错误响应类型
+     * 登录响应类型
      */
     private ResponseType loginType = ResponseType.JSON;
+
+    /**
+     * 响应类型
+     */
+    private ResponseType responseType=ResponseType.JSON;
 
     /**
      * 登录成功后跳转的地址，如果设置了此属性，则登录成功后总是会跳到这个地址上。

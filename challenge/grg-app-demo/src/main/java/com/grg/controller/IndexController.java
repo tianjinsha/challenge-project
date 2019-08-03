@@ -1,6 +1,7 @@
 package com.grg.controller;
 
 import com.grg.model.User;
+import com.grg.security.app.social.AppSingUpUtils;
 import com.grg.security.common.properties.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -32,6 +33,9 @@ public class IndexController {
     private ProviderSignInUtils providerSignInUtils;
 
     @Autowired
+    private AppSingUpUtils appSingUpUtils;
+
+    @Autowired
     private SecurityProperties securityProperties;
 
     @GetMapping("/ping")
@@ -45,7 +49,7 @@ public class IndexController {
 
         //不管是注册用户还是绑定用户，都会拿到一个用户唯一标识。
         String userId = user.getUsername();
-        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        appSingUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 
     @GetMapping("/me")

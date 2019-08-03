@@ -1,6 +1,7 @@
 package com.grg.security.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier("userDetailService")
     private UserDetailsService userDetailsService;
 
     /**
@@ -42,4 +44,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/social/signUp")
+                .permitAll();
+    }
 }

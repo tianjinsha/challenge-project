@@ -2,6 +2,7 @@ package com.grg.security.browser.controller;
 
 import com.grg.common.util.R;
 import com.grg.common.util.RespCode;
+import com.grg.security.common.properties.ResponseType;
 import com.grg.security.common.properties.SecurityConstants;
 import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.social.support.SocialUserInfo;
@@ -64,7 +65,8 @@ public class SecurityController {
         if (savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
             log.info("引发跳转的请求是:" + targetUrl);
-            if (StringUtils.endsWithIgnoreCase(targetUrl, HTML_SUFFIX)) {
+            if(StringUtils.endsWithIgnoreCase(targetUrl, HTML_SUFFIX )
+                    ||securityProperties.getBrowser().getResponseType().equals(ResponseType.HTML)){
                 redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }

@@ -90,8 +90,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         super.configure(security);
         security
                 .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .allowFormAuthenticationForClients();
+                .checkTokenAccess("isAuthenticated()");
+//                .allowFormAuthenticationForClients();
     }
 
     /**

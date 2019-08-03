@@ -60,6 +60,9 @@ public interface SecurityConstants {
      */
     String DEFAULT_PARAMETER_NAME_PROVIDER_ID = "providerId";
 
-
+    /**
+     * 获取第三方用户信息的url
+     */
+    String DEFAULT_SOCIAL_USER_INFO_URL="/social/user";
 
 }

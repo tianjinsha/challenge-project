@@ -1,14 +1,11 @@
 package com.grg.security.resource.server;
 
 import com.grg.security.common.config.FilterIgnorePropertiesConfig;
-import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -16,15 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
 
 /**
  * @author tjshan

@@ -32,7 +32,6 @@
             <artifactId>grg-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <!-- oauth2 授权管理 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
