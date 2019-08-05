@@ -29,6 +29,7 @@
         </dependency>
 
         <dependency>
+
             <groupId>com.grg</groupId>
             <artifactId>grg-security-resource</artifactId>
             <version>1.0-SNAPSHOT</version>

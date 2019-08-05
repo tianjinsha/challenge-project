@@ -23,6 +23,9 @@ zuul:
     router-browser:
       service-id: grg-browser-demo
       path: /browser/**
+    router-app:
+      service-id: grg-app-demo
+      path: /app/**
   ignored-services: '*'
 
 

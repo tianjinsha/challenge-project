@@ -30,7 +30,7 @@ challenge:
         clientId: challenge
         clientSecret: challengeSecret
         accessTokenValidateSeconds: 3600
-      storeType: jwt
+      storeType: redis
     ignore:
       urls:
       - /user/register
