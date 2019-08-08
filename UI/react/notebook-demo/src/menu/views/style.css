@@ -1,0 +1,60 @@
+
+/* 查询新增 */
+.action-wrap{
+    display: flex;
+     align-items: space-between;
+     padding:15px 15px 5px 15px;
+}
+
+/* 目录类别 */
+
+.todo-list{
+    margin:15px 0;
+    width: 300;
+    padding:0;
+}
+
+.todo-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding:8px 15px;
+}
+.todo-item:hover{
+    background: #f1f1f1;
+}
+.item-info{
+    flex: 1 0 auto; 
+    width: 270px;
+}
+
+.item-info h4{
+    font-size:16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+}
+
+/* 目录动作 */
+.item-action{
+    text-align: center;
+    width: 30px;
+}
+.item-action .favorite{
+    color: #ccc;
+    font-size:24px;
+    cursor: pointer;
+}
+
+
+/* 添加文件名称model */
+
+.todo-create-modal{
+    align-items: center;
+    display: flex;
+    margin:5px 10px;
+}
+
+.todo-create-modal .modal-btn{
+    margin-left:15px;
+}
