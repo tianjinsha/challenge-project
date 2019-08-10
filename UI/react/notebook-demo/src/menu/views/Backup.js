@@ -7,7 +7,6 @@ import {isNull} from '../../common/Util'
 
 class Backup extends Component {
     outMenu = () => {
-        console.log(this.props)
         const {
             onToggleMenu,
             parent,
@@ -37,14 +36,14 @@ class Backup extends Component {
 
 const setVisiableTodos = (todos, filter) => {
     let parentId = '';
-    if (filter.current !== null) {
-        parentId = filter.current.parentId;
+    if (filter.currentMenu !== null) {
+        parentId = filter.currentMenu.parentId;
     }
     return todos.filter(item => item.id === parentId)
 }
 
 const mapStateToProps = (state) => {
-    const arr = setVisiableTodos(state[State.MENUS], state[State.CURRENT_MENU]);
+    const arr = setVisiableTodos(state[State.MENUS], state[State.CURRENT]);
     let parentMenu = null;
     if (arr !== null && arr !== undefined && arr.length > 0) {
         parentMenu = arr[0];
@@ -52,7 +51,7 @@ const mapStateToProps = (state) => {
 
     return {
         parent: parentMenu,
-        currentMenu: state[State.CURRENT_MENU]
+        currentMenu: state[State.CURRENT]
     }
 }
 

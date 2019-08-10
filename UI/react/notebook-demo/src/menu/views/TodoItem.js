@@ -5,7 +5,7 @@ import { TYPE_DIRECTORY, TYPE_FILE } from '../MenuType';
 import './style.css'
 import moment from 'moment';
 
-const TodoItem = ({ content, toggleFavorite, intoMenu }) => {
+const TodoItem = ({ content, toggleFavorite, intoMenu,intoNote }) => {
 
   const dateFormat = "YYYY-MM-DD hh:mm";
   const IconType = content.type === TYPE_DIRECTORY ? 'folder' : 'file';
@@ -13,7 +13,7 @@ const TodoItem = ({ content, toggleFavorite, intoMenu }) => {
   const favoriteColor = content.favorite ? '#f30' : '#ccc';
 
   return (
-    <li className="todo-item" onDoubleClick={intoMenu}>
+    <li className="todo-item" onDoubleClick={intoMenu} onClick={intoNote}>
       <div className='item-info'>
         <h4><Icon type={IconType} style={{ color: color }} />&nbsp; {content.title}</h4>
         <time>{moment(content.createTime).format(dateFormat)}</time>

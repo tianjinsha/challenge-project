@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import * as State from '../../common/StateConstant'
+
 // 引入编辑器组件
 import BraftEditor from 'braft-editor'
 // 引入编辑器样式
@@ -50,4 +53,16 @@ class Panel extends Component {
     }
 }
 
-export default Panel;
+const mapStateToProps = (state, ownProps) => {
+    return {
+      notes: state[State.NOTES],
+    }
+  }
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+     
+    };
+  };
+
+  export default connect(mapStateToProps, mapDispatchToProps)( Panel);

@@ -4,8 +4,11 @@ import { Button, Menu, Dropdown } from 'antd';
 import AddTodoModel from './AddTodoModal'
 import * as MenuType from '../MenuType'
 import * as State from '../../common/StateConstant'
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { addMenu } from '../actions';
+import { addNote } from '../../edit/actions';
+import { toggleNote } from '../../filter/actions';
+import { uuid } from '../../common/Util'
 
 const menu = ({ handler }) => {
   return (
@@ -40,12 +43,22 @@ class AddTodo extends Component {
   }
 
   handleSubmit = (inputValue) => {
-    const {currentMenu='',onAdd} =this.props;
-    const {type}=this.state;
+    const {
+      currentMenu = '',
+      onAddMenu,
+      onAddNote,
+      onToggleNote
+    } = this.props;
+    const { type } = this.state;
+    const id = uuid();
     if (!inputValue.trim()) {
       return;
     }
-    onAdd(inputValue,type,currentMenu.currentId);
+    onAddMenu(id, inputValue, type, currentMenu.currentId);
+    if (type === MenuType.TYPE_FILE) {
+      onAddNote(id, inputValue, "");
+      onToggleNote({ id: id, title: inputValue, content: "" });
+    }
 
     this.setState({
       type: MenuType.TYPE_FILE,
@@ -73,7 +86,7 @@ class AddTodo extends Component {
 
     const parentMethod = {
       handleModalVisible: this.cancelHandle,
-      handleSubmit:this.handleSubmit
+      handleSubmit: this.handleSubmit
     }
 
     return (
@@ -91,19 +104,26 @@ class AddTodo extends Component {
 }
 
 AddTodo.propTypes = {
-  onAdd: PropTypes.func.isRequired
+  onAddMenu: PropTypes.func.isRequired,
+  onAddNote: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
-    currentMenu: state[State.CURRENT_MENU]
+    currentMenu: state[State.CURRENT]
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAdd: (title, type,parentId='') => {
-      dispatch(addMenu(title, type,parentId));
+    onAddMenu: (id, title, type, parentId = '') => {
+      dispatch(addMenu(id, title, type, parentId));
+    },
+    onAddNote: (id, title, content) => {
+      dispatch(addNote(id, title, content))
+    },
+    onToggleNote: (currentNote) => {
+      dispatch(toggleNote(currentNote))
     }
   }
 };

@@ -1,9 +1,8 @@
 import {ADD_MENU,REMOVE_MENU,RENAME_MENU,TOGGLE_FAVORITE} from './actionType';
-import {uuid} from '../common/Util'
 
-export const addMenu=(title,type,parentId)=>({
+export const addMenu=(id,title,type,parentId)=>({
     type:ADD_MENU,
-    id:uuid(),
+    id:id,
     parentId:parentId,
     title:title,
     menuType:type,

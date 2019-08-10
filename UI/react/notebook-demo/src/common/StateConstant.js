@@ -1,3 +1,5 @@
 export const MENUS='menus';
 
-export const  CURRENT_MENU='currentMenu';
+export const  CURRENT='current';
+
+export const NOTES='notes';

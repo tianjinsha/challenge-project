@@ -1,10 +1,15 @@
-import {CHANGE_MENU,SEARCH_FILE} from './actionType'
+import {CHANGE_MENU,CHANGE_NOTE,SEARCH_FILE} from './actionType'
 
-export const toggleMenu=(depth,currentId,current)=>({
+export const toggleMenu=(depth,currentId,currentMenu)=>({
     type:CHANGE_MENU,
     depth,
     currentId,
-    current
+    currentMenu
+})
+
+export const toggleNote=(currentNote)=>({
+    type:CHANGE_NOTE,
+    currentNote
 })
 
 export const SearchFile=(keyword)=>({

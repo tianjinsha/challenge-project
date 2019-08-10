@@ -3,25 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 import { toggleFavorite } from '../actions';
-import { toggleMenu } from '../../filter/actions';
+import { toggleMenu, toggleNote } from '../../filter/actions';
 import { Icon } from 'antd';
 import { TYPE_DIRECTORY, TYPE_FILE } from '../MenuType'
 import * as State from '../../common/StateConstant'
-import {isNull} from '../../common/Util'
+import { isNull } from '../../common/Util'
 import './style.css'
 
 class TodoList extends Component {
 
-  intoMenu = (current) => {
-    console.log(current)
+  intoMenu = (currentMenu) => {
     const {
       onToggleMenu,
       currentMenu: { depth }
     } = this.props;
 
-    if (current.type === TYPE_DIRECTORY) {
-      onToggleMenu(depth + 1, current.id, current);
+    if (currentMenu.type === TYPE_DIRECTORY) {
+      onToggleMenu(depth + 1, currentMenu.id, currentMenu);
     }
+  }
+
+  intoNote = (id, type) => {
+    const { notes, onToggleNote } = this.props;
+    let note=[];
+    if (type === TYPE_FILE) {
+      note= notes.filter(item =>{
+        return  item.id === id;
+      });
+      if (note.length === 1) {
+        console.log(note[0])
+        onToggleNote(note[0])
+      }
+    }
+
   }
 
   render() {
@@ -47,6 +61,7 @@ class TodoList extends Component {
               content={item}
               toggleFavorite={() => onFavorite(item.id)}
               intoMenu={() => this.intoMenu(item)}
+              intoNote={() => this.intoNote(item.id, item.type)}
             />
           ))
         }
@@ -56,21 +71,18 @@ class TodoList extends Component {
 }
 
 const setVisiableTodos = (todos, filter) => {
-  // debugger;
-  console.log(filter)
-  let currentId="";
-  if(!isNull(filter.current)){
-      currentId=filter.current.id;
+  let currentId = "";
+  if (!isNull(filter.currentMenu)) {
+    currentId = filter.currentMenu.id;
   }
-
-  console.log("currentId::"+currentId)
   return todos.filter(item => item.parentId === currentId)
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    todos: setVisiableTodos(state[State.MENUS], state[State.CURRENT_MENU]),
-    currentMenu: state[State.CURRENT_MENU]
+    todos: setVisiableTodos(state[State.MENUS], state[State.CURRENT]),
+    notes: state[State.NOTES],
+    currentMenu: state[State.CURRENT]
   }
 }
 
@@ -79,8 +91,11 @@ const mapDispatchToProps = (dispatch) => {
     onFavorite: id => {
       dispatch(toggleFavorite(id));
     },
-    onToggleMenu: (depth, currentId, currrent) => {
-      dispatch(toggleMenu(depth, currentId, currrent))
+    onToggleMenu: (depth, currentId, currrentMenu) => {
+      dispatch(toggleMenu(depth, currentId, currrentMenu))
+    },
+    onToggleNote: (currentNote) => {
+      dispatch(toggleNote(currentNote))
     }
   };
 };

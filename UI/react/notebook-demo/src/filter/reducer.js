@@ -1,9 +1,9 @@
-import { CHANGE_MENU, SEARCH_FILE } from './actionType';
+import { CHANGE_MENU, CHANGE_NOTE, SEARCH_FILE } from './actionType';
 import { setStorage, getStorage } from '../common/Storage';
-import {CURRENT_MENU} from '../common/StateConstant';
+import { CURRENT } from '../common/StateConstant';
 //获取初始化数据
-const localMenu = JSON.parse(getStorage(CURRENT_MENU));
-const initState = localMenu || {current:null,currentId:'',depth:0,keyword:''};
+const localMenu = JSON.parse(getStorage(CURRENT));
+const initState = localMenu || { currentMenu: null, currentNote: null, currentId: '', depth: 0, keyword: '' };
 
 export default (state = initState, action) => {
 
@@ -12,17 +12,26 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 depth: action.depth,
-                currentId:action.currentId,
-                current:action.current
-              
+                currentId: action.currentId,
+                currentMenu: action.currentMenu
+
             };
-            setStorage(CURRENT_MENU,state)
+            setStorage(CURRENT, state)
             return state;
         }
-        case SEARCH_FILE:{
-            state={
+        case CHANGE_NOTE: {
+            state = {
                 ...state,
-                keyword:action.keyword
+                currentNote: action.currentNote
+
+            };
+            setStorage(CURRENT, state)
+            return state;
+        }
+        case SEARCH_FILE: {
+            state = {
+                ...state,
+                keyword: action.keyword
             }
             return state;
         }

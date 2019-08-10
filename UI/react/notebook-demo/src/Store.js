@@ -3,6 +3,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import * as State from './common/StateConstant'
 import {reducer as menuReducer} from './menu';
 import {reducer as filterReducer} from './filter';
+import {reducer as notesReducer} from './edit';
 
 // import Perf from 'react-addons-perf';
 // const win = window;
@@ -10,7 +11,8 @@ import {reducer as filterReducer} from './filter';
 
 const reducer =combineReducers({
   [State.MENUS]:menuReducer,
-  [State.CURRENT_MENU]:filterReducer
+  [State.CURRENT]:filterReducer,
+  [State.NOTES]:notesReducer
 });
 
 // const middlewares = [];
