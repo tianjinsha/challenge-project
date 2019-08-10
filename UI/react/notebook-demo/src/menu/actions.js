@@ -1,9 +1,10 @@
 import {ADD_MENU,REMOVE_MENU,RENAME_MENU,TOGGLE_FAVORITE} from './actionType';
 import {uuid} from '../common/Util'
 
-export const addMenu=(title,type)=>({
+export const addMenu=(title,type,parentId)=>({
     type:ADD_MENU,
     id:uuid(),
+    parentId:parentId,
     title:title,
     menuType:type,
     favorite:false,
@@ -25,6 +26,8 @@ export const toggleFavorite=(id)=>({
     type:TOGGLE_FAVORITE,
     id:id
 })
+
+
 
 
 

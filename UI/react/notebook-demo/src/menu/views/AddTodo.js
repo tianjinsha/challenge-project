@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Menu, Dropdown } from 'antd';
 import AddTodoModel from './AddTodoModal'
 import * as MenuType from '../MenuType'
+import * as State from '../../common/StateConstant'
 import {connect} from 'react-redux';
 import { addMenu } from '../actions';
 
@@ -39,12 +40,12 @@ class AddTodo extends Component {
   }
 
   handleSubmit = (inputValue) => {
-    const {onAdd} =this.props;
+    const {currentMenu='',onAdd} =this.props;
     const {type}=this.state;
     if (!inputValue.trim()) {
       return;
     }
-    onAdd(inputValue,type);
+    onAdd(inputValue,type,currentMenu.currentId);
 
     this.setState({
       type: MenuType.TYPE_FILE,
@@ -93,12 +94,18 @@ AddTodo.propTypes = {
   onAdd: PropTypes.func.isRequired
 };
 
+const mapStateToProps = (state) => {
+  return {
+    currentMenu: state[State.CURRENT_MENU]
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAdd: (title, type) => {
-      dispatch(addMenu(title, type));
+    onAdd: (title, type,parentId='') => {
+      dispatch(addMenu(title, type,parentId));
     }
   }
 };
 
-export default connect(null, mapDispatchToProps)(AddTodo);
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);

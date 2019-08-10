@@ -11,3 +11,14 @@ export function uuid() {
     var uuid = s.join("");
     return uuid;
 }
+
+export function isNull(object){
+    if (object===null || object===undefined ) {
+        return true;
+    }
+    for (var i in object) { 
+        return false
+    }
+
+    return true;
+}

@@ -1,0 +1,66 @@
+import React, { Component } from 'react';
+import { Button } from 'antd';
+import { connect } from 'react-redux';
+import * as State from '../../common/StateConstant';
+import { toggleMenu } from '../../filter/actions'
+import {isNull} from '../../common/Util'
+
+class Backup extends Component {
+    outMenu = () => {
+        console.log(this.props)
+        const {
+            onToggleMenu,
+            parent,
+            currentMenu: { depth }
+        } = this.props;
+
+        if(depth===0){
+            return;
+        }
+        let parentId='';
+        if(!isNull(parent)){
+                parentId=parent.parentId;
+        }
+
+        onToggleMenu(depth - 1, parentId, parent);
+    }
+    render() {
+        const {
+             currentMenu: { depth }
+        }=this.props
+
+        return (
+            <Button icon="rollback" disabled={depth===0} onClick={() => this.outMenu()}></Button>
+        )
+    }
+}
+
+const setVisiableTodos = (todos, filter) => {
+    let parentId = '';
+    if (filter.current !== null) {
+        parentId = filter.current.parentId;
+    }
+    return todos.filter(item => item.id === parentId)
+}
+
+const mapStateToProps = (state) => {
+    const arr = setVisiableTodos(state[State.MENUS], state[State.CURRENT_MENU]);
+    let parentMenu = null;
+    if (arr !== null && arr !== undefined && arr.length > 0) {
+        parentMenu = arr[0];
+    }
+
+    return {
+        parent: parentMenu,
+        currentMenu: state[State.CURRENT_MENU]
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onToggleMenu: (depth, currentId, currrent) => {
+            dispatch(toggleMenu(depth, currentId, currrent))
+        }
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Backup);
