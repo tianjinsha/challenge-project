@@ -11,74 +11,68 @@ import 'braft-editor/dist/index.css';
 
 class Panel extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             // 创建一个空的editorState作为初始值
-            editorState: BraftEditor.createEditorState('<p>hello</p>'),
+            isChanged: false,
+            editorState: BraftEditor.createEditorState('<p>hello word</p>'),
             outputHTML: '<p>hello</p>'
         }
     }
 
     async componentDidMount() {
         this.isChanged = false;
-        const { note } = this.props;
-        console.log('aaa')
+        const {note}=this.props;
         // 3秒后更改编辑器内容
-        // this.setEditorContent(note.content);
+        this.setEditorContent(note.content);
     }
 
     componentWillUnmount() {
         this.isChanged = false
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log(prevProps,prevState)
-      }
+    shouldComponentUpdate(nextProps, nextState) {
+
+        if(!isNull(this.props.note)){
+            if (this.props.note.id === nextProps.note.id) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 
     handleChange = (editorState) => {
-        const{
-            onSaveNote,
-            note:{id}
-        } =this.props;
-
-        // onSaveNote(id,editorState.toHTML());
-        // console.log(editorState.toHTML())
-        
         this.setState({
             editorState: editorState,
             outputHTML: editorState.toHTML()
         })
     }
 
-    hello= async () => {
-        console.log("hello word")
+    setEditorContent = (content) => {
+        this.setState({
+            editorState: BraftEditor.createEditorState(content)
+        })
     }
 
-    // setEditorContent = (content) => {
-    //     this.setState({
-    //         editorState: BraftEditor.createEditorState(content)
-    //     })
-    // }
-
     saveEditorContent = () => {
-        const {outputHTML}=this.state;
-        console.log("---")
-        console.log(this.state)
-        const{
+        const { outputHTML } = this.state;
+        const {
             onSaveNote,
-            note:{id}
-        } =this.props;
-        onSaveNote(id,outputHTML)
+            note: { id }
+        } = this.props;
+        onSaveNote(id, outputHTML)
     }
 
     render() {
-        const { editorState } = this.state;
-        const {note} =this.props;
+        const { note } = this.props;
+        console.log(this.props)
+        let editorValue = BraftEditor.createEditorState(null);
+        if (!isNull(note)) {
+            editorValue = BraftEditor.createEditorState(note.content);
+        }
 
-        const editorValue=BraftEditor.createEditorState(note.content);
-
-        // console.log(this.props)
         const extendControls = [
             {
                 key: 'custom-button',
@@ -94,7 +88,7 @@ class Panel extends Component {
                     <BraftEditor
                         value={editorValue}
                         extendControls={extendControls}
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.handleChange}
                     />
                 </div>
             </div>

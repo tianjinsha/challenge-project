@@ -4,7 +4,12 @@ import { NOTES } from '../common/StateConstant';
 
 //获取初始化数据
 const localNotes = JSON.parse(getStorage(NOTES));
-const initState = localNotes || [];
+const helloNote={
+    id:0,
+    title:'欢迎使用笔记',
+    content:'hello word !'
+}
+const initState = localNotes || [helloNote];
 
 export default (state = initState, action) => {
     switch (action.type) {

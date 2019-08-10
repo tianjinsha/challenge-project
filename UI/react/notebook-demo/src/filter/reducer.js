@@ -3,7 +3,7 @@ import { setStorage, getStorage } from '../common/Storage';
 import { CURRENT } from '../common/StateConstant';
 //获取初始化数据
 const localMenu = JSON.parse(getStorage(CURRENT));
-const initState = localMenu || { currentMenu: null, currentNoteId: null, currentMenuId: '', depth: 0, keyword: '' };
+const initState = localMenu || { currentMenu: null, currentNoteId: 0, currentMenuId: '', depth: 0, keyword: '' };
 
 export default (state = initState, action) => {
 

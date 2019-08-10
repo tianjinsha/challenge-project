@@ -3,7 +3,14 @@ import { setStorage, getStorage } from '../common/Storage';
 import { MENUS } from '../common/StateConstant';
 //获取初始化数据
 const localMenus = JSON.parse(getStorage(MENUS));
-const initState = localMenus || [];
+const helloMenu={
+    id:0,
+    title:'欢迎使用笔记',
+    type:'file',
+    createTime:new Date().getTime(),
+    parentId:''
+}
+const initState = localMenus || [helloMenu];
 
 export default (state = initState, action) => {
     switch (action.type) {

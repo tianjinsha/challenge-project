@@ -12,6 +12,19 @@ import './style.css'
 
 class TodoList extends Component {
 
+   compareWithType =  (obj1, obj2)=> {
+    var val1 = obj1.type;
+    var val2 = obj2.type;
+    if (val1 < val2) {
+        return -1;
+    } else if (val1 > val2) {
+        return 1;
+    } else {
+        return 0;
+    }            
+} 
+
+
   intoMenu = (currentMenu) => {
     const {
       onToggleMenu,
@@ -25,10 +38,10 @@ class TodoList extends Component {
 
   intoNote = (id, type) => {
     const { notes, onToggleNote } = this.props;
-    let note=[];
+    let note = [];
     if (type === TYPE_FILE) {
-      note= notes.filter(item =>{
-        return  item.id === id;
+      note = notes.filter(item => {
+        return item.id === id;
       });
       if (note.length === 1) {
         onToggleNote(note[0].id)
@@ -41,20 +54,12 @@ class TodoList extends Component {
     const {
       todos,
       onFavorite
-    } = this.props
+    } = this.props;
+
     return (
       <ul className="todo-list">
-        <li className="todo-item">
-          <div className='item-info'>
-            <h4> <Icon type="file" theme="twoTone" />&nbsp;欢迎使用笔记</h4>
-            <time>2018-12-12 12:14</time>
-          </div>
-          <div className="item-action">
-            <Icon type="star" theme="filled" className="favorite" />
-          </div>
-        </li>
         {
-          todos.map(item => (
+          todos.sort(this.compareWithType).map(item => (
             <TodoItem
               key={item.id}
               content={item}
