@@ -33,6 +33,7 @@ export default (state = initState, action) => {
                 ...state,
                 keyword: action.keyword
             }
+            setStorage(CURRENT, state)
             return state;
         }
         default: {

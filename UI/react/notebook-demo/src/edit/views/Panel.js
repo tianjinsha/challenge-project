@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import * as State from '../../common/StateConstant';
 import { updateNote } from '../actions';
 import { isNull, isStringNull } from '../../common/Util';
+import { Button } from "antd";
+import './style.css'
 
 // 引入编辑器组件
 import BraftEditor from 'braft-editor';
 // 引入编辑器样式
 import 'braft-editor/dist/index.css';
+
 
 class Panel extends Component {
 
@@ -22,7 +25,6 @@ class Panel extends Component {
     }
 
     async componentDidMount() {
-        this.isChanged = false;
         const {note}=this.props;
         // 3秒后更改编辑器内容
         this.setEditorContent(note.content);
@@ -33,13 +35,11 @@ class Panel extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-
         if(!isNull(this.props.note)){
             if (this.props.note.id === nextProps.note.id) {
                 return false;
             }
         }
-        
         return true;
     }
 
@@ -67,7 +67,6 @@ class Panel extends Component {
 
     render() {
         const { note } = this.props;
-        console.log(this.props)
         let editorValue = BraftEditor.createEditorState(null);
         if (!isNull(note)) {
             editorValue = BraftEditor.createEditorState(note.content);
@@ -83,7 +82,13 @@ class Panel extends Component {
         ]
 
         return (
-            <div style={{ padding: '24px 0', background: '#fff', minHeight: 480, flex: '0 1 auto' }}>
+            <div className="editor-panel">
+                <div className="panel-header">
+                    <h4  className="panel-titlie">{note.title}</h4>
+                    <div className="editor-action">
+                        <Button icon="save"  type="primary" shape="round" size="small" className="editor-save" onClick={this.saveEditorContent}>保存</Button>
+                    </div>
+                </div>
                 <div className="editor-wrapper">
                     <BraftEditor
                         value={editorValue}

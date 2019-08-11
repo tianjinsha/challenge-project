@@ -1,60 +1,80 @@
+ul{
+    list-style: none;
+}
+
+.todo {
+    background: #f9f9f9;
+    min-width: 480;
+}
+
 
 /* 查询新增 */
-.action-wrap{
+.action-wrap {
     display: flex;
-     align-items: space-between;
-     padding:15px 15px 5px 15px;
+    align-items: space-between;
+    padding: 15px 15px 5px 15px;
 }
 
 /* 目录类别 */
 
-.todo-list{
-    margin:15px 0;
-    width: 300;
-    padding:0;
+.todo-list {
+    margin: 15px 0;
+    width: 300px;
+    padding: 0;
 }
 
-.todo-item{
-    display: flex;
-    align-items: center;
+.todo-item {
     width: 100%;
-    padding:8px 15px;
-}
-.todo-item:hover{
-    background: #f1f1f1;
-}
-.item-info{
-    flex: 1 0 auto; 
-    width: 270px;
+    padding: 10px 15px;
 }
 
-.item-info h4{
+.todo-item:hover {
+    background: #eaf0fb94 !important;
+}
+
+.item-header {
+    width: 100%;
+    display: flex;
+}
+
+.item-header h4 {
     font-size:16px;
+    flex: 1 1 auto;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space:nowrap;
 }
-
-/* 目录动作 */
-.item-action{
-    text-align: center;
-    width: 30px;
+/* 列表鼠标经过显式层 */
+.item-header .item-action {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 16px;
+    display: none;
 }
-.item-action .favorite{
-    color: #ccc;
-    font-size:24px;
+.item-header .rename-input{
+    width: auto;
+    font-size: 14px;
+}
+.item-header .action-icon {
+    margin: 0 5px;
     cursor: pointer;
+    width: 22px;
 }
 
+.item-header .item-over {
+ 
+}
 
 /* 添加文件名称model */
 
-.todo-create-modal{
+.todo-create-modal {
     align-items: center;
     display: flex;
-    margin:5px 10px;
+    margin: 5px 10px;
 }
 
-.todo-create-modal .modal-btn{
-    margin-left:15px;
+.todo-create-modal .modal-btn {
+    margin-left: 15px;
 }

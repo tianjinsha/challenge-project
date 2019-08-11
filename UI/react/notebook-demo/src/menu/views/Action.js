@@ -1,14 +1,14 @@
 import React from 'react';
 import AddTodo from './AddTodo';
-import SearchTodo from './SearchTodo';
 import Backup from './Backup'
+import {view as SearchTodo} from '../../filter'
 
 const Action = () => {
   return (
     <div  className="action-wrap">
       <Backup/>
       &nbsp;
-      <SearchTodo />
+      <SearchTodo/>
       &nbsp;
        <AddTodo />
     </div>

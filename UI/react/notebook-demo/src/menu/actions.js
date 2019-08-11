@@ -1,4 +1,4 @@
-import {ADD_MENU,REMOVE_MENU,RENAME_MENU,TOGGLE_FAVORITE} from './actionType';
+import {ADD_MENU,REMOVE_MENU,RENAME_MENU,TOGGLE_FAVORITE,TOGGLE_REMOVE_MENU} from './actionType';
 
 export const addMenu=(id,title,type,parentId)=>({
     type:ADD_MENU,
@@ -12,12 +12,18 @@ export const addMenu=(id,title,type,parentId)=>({
 
 export const removeMenu=(id)=>({
     type:REMOVE_MENU,
-    id:id
+    id
+})
+
+export const toggleRemoveMenu=(id,deleted)=>({
+    type:TOGGLE_REMOVE_MENU,
+    id,
+    deleted:!deleted
 })
 
 export const renameMenu=(id,newTitle)=>({
     type:RENAME_MENU,
-    id:id,
+    id,
     title:newTitle
 })
 

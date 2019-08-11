@@ -92,7 +92,7 @@ class AddTodo extends Component {
     return (
       <div>
         <Dropdown overlay={menu({ handler: this.addNew })} trigger={['click']}>
-          <Button icon="plus" ></Button>
+          <Button icon="plus" title="新建"></Button>
         </Dropdown>
         <AddTodoModel
           {...parentProps}

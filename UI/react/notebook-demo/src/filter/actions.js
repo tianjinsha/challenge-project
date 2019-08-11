@@ -12,7 +12,7 @@ export const toggleNote=(currentNoteId)=>({
     currentNoteId
 })
 
-export const SearchFile=(keyword)=>({
+export const searchNote=(keyword)=>({
     type:SEARCH_FILE,
     keyword
 })

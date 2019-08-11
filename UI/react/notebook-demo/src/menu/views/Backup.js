@@ -29,7 +29,7 @@ class Backup extends Component {
         }=this.props
 
         return (
-            <Button icon="rollback" disabled={depth===0} onClick={() => this.outMenu()}></Button>
+            <Button icon="rollback" disabled={depth===0} onClick={() => this.outMenu()} title="返回上一级"></Button>
         )
     }
 }
