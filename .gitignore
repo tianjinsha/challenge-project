@@ -40,10 +40,12 @@ target/
 *.tar
 *.tar.gz
 
+
 # eclipse ignore
 .settings/
 .project
 .classpath
+.history
 
 # idea ignore
 .idea/

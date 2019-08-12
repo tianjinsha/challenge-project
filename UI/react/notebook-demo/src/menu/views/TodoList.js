@@ -71,13 +71,13 @@ class TodoList extends Component {
     }
 
 
-    const  parentMethod={
-      onFavorite,
-      onToggleRemoveMenu,
-      onRenameMenu,
-      intoMenu: this.intoMenu,
-      intoNote:this.intoNote,
-    }
+    // const  parentMethod={
+    //   onFavorite,
+    //   onToggleRemoveMenu,
+    //   onRenameMenu,
+    //   intoMenu: this.intoMenu,
+    //   intoNote:this.intoNote,
+    // }
 
     return (
       <ul className="todo-list">

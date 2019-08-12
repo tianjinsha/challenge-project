@@ -1,28 +1,39 @@
-// import {createStore} from 'redux';
-import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import * as State from './common/StateConstant'
-import {reducer as menuReducer} from './menu';
-import {reducer as filterReducer} from './filter';
-import {reducer as notesReducer} from './edit';
+import { reducer as menuReducer } from './menu';
+import { reducer as filterReducer } from './filter';
+import { reducer as notesReducer } from './edit';
+// 利用redux-logger打印日志
+import { createLogger } from 'redux-logger'
 
-// import Perf from 'react-addons-perf';
-// const win = window;
-// win.Perf = Perf;
 
-const reducer =combineReducers({
-  [State.MENUS]:menuReducer,
-  [State.CURRENT]:filterReducer,
-  [State.NOTES]:notesReducer
+const reducer = combineReducers({
+  [State.MENUS]: menuReducer,
+  [State.CURRENT]: filterReducer,
+  [State.NOTES]: notesReducer
 });
 
-// const middlewares = [];
-// if (process.env.NODE_ENV !== 'production') {
-//   middlewares.push(require('redux-immutable-state-invariant')());
-// }
 
-// const storeEnhancers = compose(
-//   applyMiddleware(...middlewares),
-//   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
-// );
+const composeEnhancers =
+  typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
 
-export default createStore(reducer);
+const middleware = [];
+
+
+// 使用日志打印方法
+const loggerMiddleware = createLogger({collapsed: true});
+
+middleware.push(loggerMiddleware);
+
+
+const enhancer = composeEnhancers(
+  applyMiddleware(...middleware),
+  // other store enhancers if any
+
+);
+
+export default createStore(reducer, enhancer);

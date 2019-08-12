@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Input } from 'antd';
 import { TYPE_DIRECTORY, TYPE_FILE } from '../MenuType';
-import './style.css'
+import { isNull, isStringNull } from '../../common/Util';
+import './style.css';
 import moment from 'moment';
 
 class TodoItem extends Component {
 
   constructor(props) {
     super(props);
-    this.rename_ref = React.createRef();
     const { content } = props;
     this.state = {
       actionShow: false,
@@ -18,10 +18,19 @@ class TodoItem extends Component {
     }
   }
 
+  componentDidUpdate(prevProps,prevState){
+    const rename_input=this.refs.rename_ref;
+    if(this.state.rename && !isNull(rename_input)){
+      rename_input.focus();
+    }
+  }
+
   enterItem = () => {
-    this.setState({
-      actionShow: true
-    })
+    if(!this.state.rename){
+      this.setState({
+        actionShow: true
+      })
+    }
   }
   outItem = () => {
     this.setState({
@@ -30,8 +39,6 @@ class TodoItem extends Component {
   }
 
   startRenameMenu = () => {
-    console.log("rename");
-    console.log(this.rename_ref.current)
     this.setState({
       rename: true,
       actionShow: false
@@ -45,18 +52,17 @@ class TodoItem extends Component {
   }
 
   finallRenameMenu=(e)=>{
-    console.log("---rename",e.target.value)
-
     const {content,renameMenu}=this.props;
-
-    console.log(renameMenu)
     this.setState({
       rename: false,
       actionShow: false
     })
 
     renameMenu(content.id,e.target.value);
+  }
 
+  rename_ref=(node)=>{
+    this.Input=node;
   }
 
   render() {
@@ -71,14 +77,14 @@ class TodoItem extends Component {
     const IconType = content.type === TYPE_DIRECTORY ? 'folder' : 'file';
     const color = content.type === TYPE_DIRECTORY ? '#f60' : '#1890ff';
     const favoriteColor = content.favorite ? '#f60' : '#ccc';
-    // console.log("---update---")
 
     return (
       <li className="todo-item" onDoubleClick={intoMenu} onClick={intoNote} onMouseEnter={this.enterItem} onMouseLeave={this.outItem} style={{ background: selected ? "#eaf0fb" : "inherit" }}>
         <div className="item-header">
           <h4><Icon type={IconType} style={{ color: color }} />&nbsp;
+          
             {
-              rename ? <Input size="small" className="rename-input" defaultValue={title} ref={this.rename_ref} onChange={this.toRenameMenu}  onBlur={this.finallRenameMenu} onPressEnter={this.finallRenameMenu}/> : title
+              rename ?  <Input size="small" className="rename-input" defaultValue={title} ref="rename_ref" onChange={this.toRenameMenu}  onBlur={this.finallRenameMenu} onPressEnter={this.finallRenameMenu}/> : title
             }
           </h4>
           {/* 动作操作 */}
