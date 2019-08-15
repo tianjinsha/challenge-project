@@ -1,20 +1,27 @@
 import React, { Component } from "react";
-import { Layout,Menu, Icon } from 'antd'
-const {Sider } = Layout;
+import { Layout, Menu, Icon } from 'antd'
+const { Sider } = Layout;
 
 class MenuContext extends Component {
+
     state = {
         collapsed: false,
     };
 
     onCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ collapsed });
     };
 
     render() {
+        const style = {
+            // overflow: 'auto',
+            // height: "100%",
+            // position: 'fixed',
+            // left: 0,
+        }
+
         return (
-            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} breakpoint="md" style={style} >
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1">

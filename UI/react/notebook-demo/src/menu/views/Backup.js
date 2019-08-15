@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import { connect } from 'react-redux';
 import * as State from '../../common/StateConstant';
-import { toggleMenu } from '../../filter/actions'
-import {isNull} from '../../common/Util'
+import { toggleMenu,toggleNote } from '../../filter/actions'
+import {isNull} from '../../common/Util';
+import { choseFirstNote } from '../common'
 
 class Backup extends Component {
     outMenu = () => {
         const {
             onToggleMenu,
+            onToggleNote,
             parent,
+            todos,
             currentMenu: { depth }
         } = this.props;
 
@@ -17,11 +20,14 @@ class Backup extends Component {
             return;
         }
         let parentId='';
+        let currentId="";
         if(!isNull(parent)){
             parentId=parent.parentId;
+            currentId=parent.id;
         }
-
+        let nextNoteId = choseFirstNote(todos,currentId);
         onToggleMenu(depth - 1, parentId, parent);
+        onToggleNote(nextNoteId);
     }
     render() {
         const {
@@ -50,6 +56,7 @@ const mapStateToProps = (state) => {
     }
 
     return {
+        todos: state[State.MENUS],
         parent: parentMenu,
         currentMenu: state[State.CURRENT]
     }
@@ -59,7 +66,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onToggleMenu: (depth, currentMenuId, currrent) => {
             dispatch(toggleMenu(depth, currentMenuId, currrent))
-        }
+        },
+        onToggleNote: (currentNoteId) => {
+            dispatch(toggleNote(currentNoteId))
+          },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Backup);

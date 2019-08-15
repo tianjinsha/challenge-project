@@ -2,18 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
-import { toggleFavorite,toggleRemoveMenu,renameMenu } from '../actions';
+import { toggleFavorite, toggleRemoveMenu, renameMenu } from '../actions';
 import { toggleMenu, toggleNote } from '../../filter/actions';
 import { TYPE_DIRECTORY, TYPE_FILE } from '../MenuType'
 import * as State from '../../common/StateConstant'
-import { isNull, isStringNull } from '../../common/Util'
+import { isNull, isStringNull } from '../../common/Util';
+import { choseFirstNote } from '../common';
 import './style.css'
 
 class TodoList extends Component {
 
   compareWithType = (obj1, obj2) => {
-    var val1 = obj1.type;
-    var val2 = obj2.type;
+    let val1 = obj1.type;
+    let val2 = obj2.type;
+    if (val1 < val2) {
+      return -1;
+    } else if (val1 > val2) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  compareWithDate = (obj1, obj2) => {
+    let val1 = obj1.createTime;
+    let val2 = obj2.createTime;
     if (val1 < val2) {
       return -1;
     } else if (val1 > val2) {
@@ -27,11 +40,15 @@ class TodoList extends Component {
   intoMenu = (currentMenu) => {
     const {
       onToggleMenu,
+      onToggleNote,
+      todos,
       current: { depth }
     } = this.props;
 
     if (currentMenu.type === TYPE_DIRECTORY) {
       onToggleMenu(depth + 1, currentMenu.id, currentMenu);
+      let nextNoteId = choseFirstNote(todos, currentMenu.id);
+      onToggleNote(nextNoteId);
     }
   }
 
@@ -49,19 +66,20 @@ class TodoList extends Component {
 
   }
 
+
   render() {
     const {
-      todos,
+      currentTodos,
       onFavorite,
       onToggleRemoveMenu,
       onRenameMenu,
-      current: { keyword,currentNoteId }
+      current: { keyword, currentNoteId }
     } = this.props;
 
-    let filterTodos=todos;
+    let filterTodos = currentTodos;
 
     if (!isStringNull(keyword)) {
-      filterTodos = todos.filter(item => {
+      filterTodos = currentTodos.filter(item => {
         let m = item.title.match(new RegExp(keyword, 'g'));
         if (m === null) {
           return false;
@@ -80,23 +98,25 @@ class TodoList extends Component {
     // }
 
     return (
-      <ul className="todo-list">
-        {
-          filterTodos.filter(item=>(!item.deleted)).sort(this.compareWithType).map(item => (
-            <TodoItem
-              key={item.id}
-              content={item}
-              selected={item.id===currentNoteId}
-              toggleFavorite={() => onFavorite(item.id)}
-              renameMenu={onRenameMenu}
-              intoMenu={() => this.intoMenu(item)}
-              intoNote={() => this.intoNote(item.id, item.type)}
-              toggleRemoveMenu={()=>onToggleRemoveMenu(item.id,item.deleted)}
+      <div className="list-wrap">
+        <ul className="todo-list">
+          {
+            filterTodos.filter(item => (!item.deleted)).sort(this.compareWithType).map(item => (
+              <TodoItem
+                key={item.id}
+                content={item}
+                selected={item.id === currentNoteId}
+                toggleFavorite={() => onFavorite(item.id)}
+                renameMenu={onRenameMenu}
+                intoMenu={() => this.intoMenu(item)}
+                intoNote={() => this.intoNote(item.id, item.type)}
+                toggleRemoveMenu={() => onToggleRemoveMenu(item.id, item.deleted)}
               // {...parentMethod}
-            />
-          ))
-        }
-      </ul>
+              />
+            ))
+          }
+        </ul>
+      </div>
     );
   }
 }
@@ -111,7 +131,8 @@ const setVisiableTodos = (todos, filter) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    todos: setVisiableTodos(state[State.MENUS], state[State.CURRENT]),
+    todos: state[State.MENUS],
+    currentTodos: setVisiableTodos(state[State.MENUS], state[State.CURRENT]),
     notes: state[State.NOTES],
     current: state[State.CURRENT]
   }
@@ -128,17 +149,17 @@ const mapDispatchToProps = (dispatch) => {
     onToggleNote: (currentNoteId) => {
       dispatch(toggleNote(currentNoteId))
     },
-    onToggleRemoveMenu:(id,deleted)=>{
-      dispatch(toggleRemoveMenu(id,deleted));
+    onToggleRemoveMenu: (id, deleted) => {
+      dispatch(toggleRemoveMenu(id, deleted));
     },
-    onRenameMenu:(id,newTitle)=>{
-      dispatch(renameMenu(id,newTitle));
+    onRenameMenu: (id, newTitle) => {
+      dispatch(renameMenu(id, newTitle));
     }
   };
 };
 
 TodoList.propTypes = {
-  todos: PropTypes.array.isRequired
+  currentTodos: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

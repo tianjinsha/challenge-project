@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as State from '../../common/StateConstant';
 import { updateNote } from '../actions';
 import { isNull, isStringNull } from '../../common/Util';
-import { Button, Empty } from "antd";
+import { Button } from "antd";
 import html2pdf from 'html2pdf.js';
 import './style.css'
 
@@ -13,7 +13,8 @@ import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
 
 
-class Panel extends Component {
+class Edit extends Component {
+
 
     constructor(props) {
         super(props);
@@ -26,11 +27,9 @@ class Panel extends Component {
     }
 
     async componentDidMount() {
-        const { note } = this.props;
+        const {note}=this.props;
         // 3秒后更改编辑器内容
-        if (!isNull) {
-            this.setEditorContent(note.content);
-        }
+        this.setEditorContent(note.content);
     }
 
     componentWillUnmount() {
@@ -38,7 +37,8 @@ class Panel extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!isNull(this.props.note) && !isNull(nextProps) && !isNull(nextProps.note)) {
+        console.log(nextProps)
+        if(!isNull(this.props.note) || isNull(nextProps)){
             if (this.props.note.id === nextProps.note.id) {
                 return false;
             }
@@ -73,24 +73,24 @@ class Panel extends Component {
 
     //导出pdf
     exportPdf = () => {
-        const { todo} = this.props;
-        const { outputHTML } = this.state;
+        const {note}=this.props;
+        const {outputHTML}=this.state;
         const opt = {
             margin: 1,
-            filename: todo.title + '.pdf',
-            image: { type: 'jpeg', quality: 0.98 }, // 导出的图片质量和格式
+            filename: note.title+'.pdf',
+            image: { type: 'jpeg', quality: 0.98  }, // 导出的图片质量和格式
             html2canvas: { scale: 2, useCORS: true }, // useCORS很重要，解决文档中图片跨域问题
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-        };
+          };
 
-        if (outputHTML !== null) {
+          if (outputHTML!==null) {
             html2pdf().set(opt).from(outputHTML).save(); // 导出
-        }
+          }
 
     }
 
     render() {
-        const { note ,todo} = this.props;
+        const { note } = this.props;
         let editorValue = BraftEditor.createEditorState(null);
         if (!isNull(note)) {
             editorValue = BraftEditor.createEditorState(note.content);
@@ -107,49 +107,33 @@ class Panel extends Component {
 
         return (
             <div className="editor-panel">
-                {
-                    !isNull(note) ? (
-                        <div className="editor-exist" style={{height:"100%"}}>
-                            <div className="panel-header">
-                                <h4 className="panel-titlie">{todo.title}</h4>
-                                <div className="editor-action">
-                                    <Button icon="save" type="primary" shape="round" size="small" className="action-item editor-save" onClick={this.saveEditorContent}>保存</Button>
-                                    <Button icon="file-pdf" type="primary" shape="round" size="small" className="action-item" onClick={this.exportPdf}>导出</Button>
-                                </div>
-                            </div>
-                            <div className="editor-wrapper">
-                                <BraftEditor
-                                    value={editorValue}
-                                    extendControls={extendControls}
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
-                    ) : (<Empty description={"暂无预览"} className="editor-empty" />)
-                }
+                <div className="panel-header">
+                    <h4  className="panel-titlie">{note.title}</h4>
+                    <div className="editor-action">
+                        <Button icon="save"  type="primary" shape="round" size="small" className="action-item editor-save" onClick={this.saveEditorContent}>保存</Button>
+                        <Button icon="file-pdf" type="primary" shape="round" size="small"  className="action-item" onClick={this.exportPdf}>导出</Button>
+                    </div>
+                </div>
+                <div className="editor-wrapper">
+                    <BraftEditor
+                        value={editorValue}
+                        extendControls={extendControls}
+                        onChange={this.handleChange}
+                    />
+                </div>
             </div>
         )
     }
 }
 
 
-const setVisiableNote = (notes, filter) => {
+const setVisiableNote = (todos, filter) => {
     if (isStringNull(filter.currentNoteId)) {
         return null;
     }
-    let filterNotes = notes.filter(item => item.id === filter.currentNoteId);
-    if (filterNotes.length === 1) {
-        return filterNotes[0];
-    }
-    return null;
-}
-const setVisiableTods = (todos, filter) => {
-    if (isStringNull(filter.currentNoteId)) {
-        return null;
-    }
-    let filterTodos = todos.filter(item => item.id === filter.currentNoteId);
-    if (filterTodos.length === 1) {
-        return filterTodos[0];
+    let notes = todos.filter(item => item.id === filter.currentNoteId);
+    if (notes.length === 1) {
+        return notes[0];
     }
     return null;
 }
@@ -157,7 +141,6 @@ const setVisiableTods = (todos, filter) => {
 const mapStateToProps = (state, ownProps) => {
     return {
         note: setVisiableNote(state[State.NOTES], state[State.CURRENT]),
-        todo: setVisiableTods(state[State.MENUS], state[State.CURRENT])
     }
 }
 
@@ -169,4 +152,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Panel);
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);
