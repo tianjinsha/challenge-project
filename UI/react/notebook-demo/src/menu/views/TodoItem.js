@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Input } from 'antd';
 import { TYPE_DIRECTORY, TYPE_FILE } from '../MenuType';
-import { isNull, isStringNull } from '../../common/Util';
+import { isNull, } from '../../common/Util';
 import './style.css';
 import moment from 'moment';
 
