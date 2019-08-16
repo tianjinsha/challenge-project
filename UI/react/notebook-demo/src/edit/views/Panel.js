@@ -107,9 +107,9 @@ class Panel extends Component {
 
         return (
             <div className="editor-panel">
-                {
+                 {
                     !isNull(note) ? (
-                        <div className="editor-exist" style={{height:"100%"}}>
+                        <div className="editor-exist" >
                             <div className="panel-header">
                                 <h4 className="panel-titlie">{todo.title}</h4>
                                 <div className="editor-action">

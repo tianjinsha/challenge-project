@@ -5,7 +5,7 @@ import HeaderView from './layout/HeaderView';
 import { view as EditView } from './edit'
 import { view as MenuView } from './menu'
 import './App.css';
-const {  Footer } = Layout;
+const {    Footer } = Layout;
 
 class App extends Component {
   render() {
