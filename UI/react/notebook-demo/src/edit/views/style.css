@@ -2,10 +2,8 @@
     padding:24px 0;
     background: #fff;
     height: 100%;
-    /* position: absolute; */
-    /* left: 500px; */
-    flex: 1 1 auto;
-    z-index: 9;
+    
+    
 }
 
 .panel-header{

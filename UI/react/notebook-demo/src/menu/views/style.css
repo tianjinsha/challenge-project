@@ -1,14 +1,13 @@
-ul{
+ul {
     list-style: none;
 }
 
 .todo {
-    /* background: #f60; */
-    flex-shrink: 0;
-    width: 280px;
+    width: 300px;
     position: relative;
-    top: 0;
     height: 100%;
+    display: flex;
+    overflow: hidden;
 }
 
 
@@ -23,20 +22,22 @@ ul{
 
 /* 目录类别 */
 
-.list-wrap{
-    position: absolute;
-    margin-top:60px; 
-    height: 100%;
-    overflow-y: scroll;
+.list-wrap {
+    flex: 1 1 auto;
+    margin-top: 60px;
+    position: relative;
 }
 
 
 .todo-list {
     margin: 15px 0;
-    width: 280px;
+    width: 300px;
     bottom: 0;
     padding: 0;
-   
+    top: 0;
+    position: absolute;
+    overflow-y: scroll;
+
 }
 
 .todo-item {
@@ -55,12 +56,13 @@ ul{
 }
 
 .item-header h4 {
-    font-size:16px;
+    font-size: 16px;
     flex: 1 1 auto;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space:nowrap;
+    white-space: nowrap;
 }
+
 /* 列表鼠标经过显式层 */
 .item-header .item-action {
     padding: 0;
@@ -70,19 +72,19 @@ ul{
     font-size: 16px;
     display: none;
 }
-.item-header .rename-input{
+
+.item-header .rename-input {
     width: auto;
     font-size: 14px;
 }
+
 .item-header .action-icon {
     margin: 0 5px;
     cursor: pointer;
     width: 22px;
 }
 
-.item-header .item-over {
- 
-}
+.item-header .item-over {}
 
 /* 添加文件名称model */
 

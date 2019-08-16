@@ -14,14 +14,11 @@ class MenuContext extends Component {
 
     render() {
         const style = {
-            // overflow: 'auto',
-            // height: "100%",
-            // position: 'fixed',
-            // left: 0,
+            height: "100%",
         }
 
         return (
-            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} breakpoint="md" style={style} >
+            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} breakpoint="lg" style={style} >
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1">
@@ -33,8 +30,8 @@ class MenuContext extends Component {
                         <span>文件夹</span>
                     </Menu.Item>
                     <Menu.Item key="3">
-                        <Icon type="tag" />
-                        <span>标签</span>
+                        <Icon type="star" />
+                        <span>收藏</span>
                     </Menu.Item>
                     <Menu.Item key="4">
                         <Icon type="delete" />
