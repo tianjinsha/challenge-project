@@ -8,7 +8,7 @@ import User from './pages/User';
 import Trash from './pages/trash';
 import Folder from './pages/folder';
 import Home from './pages/Home';
-import Star from './pages/Star';
+import Star from './pages/star';
 import './App.css';
 const { Footer } = Layout;
 

@@ -17,6 +17,7 @@ ul {
     align-items: space-between !important;
     padding: 15px 15px 5px 15px;
     position: absolute;
+    width: 100%;
     top: 0;
 }
 
