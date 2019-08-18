@@ -4,11 +4,11 @@ import MenuContent from './layout/MenuContext';
 import HeaderView from './layout/HeaderView';
 import { BrowserRouter as Router, Route, Switch, browserHistory } from 'react-router-dom';
 // import Routes from './Routes';
-import User from './page/User';
-import Trash from './page/Trash';
-import Folder from './page/Folder';
-import Home from './page/Home';
-import Star from './page/Star';
+import User from './pages/User';
+import Trash from './pages/trash';
+import Folder from './pages/folder';
+import Home from './pages/Home';
+import Star from './pages/Star';
 import './App.css';
 const { Footer } = Layout;
 
@@ -27,7 +27,7 @@ class App extends Component {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/user" component={User} />
-                  <Route path="trash" component={Trash} />
+                  <Route path="/trash" component={Trash} />
                   <Route path="/folder" component={Folder} />
                   <Route path="/star" component={Star} />
                 </Switch>

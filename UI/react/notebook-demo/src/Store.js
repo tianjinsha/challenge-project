@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import * as State from './common/StateConstant'
-import { reducer as menuReducer } from './menu';
-import { reducer as filterReducer } from './filter';
-import { reducer as notesReducer } from './edit';
+import { reducer as menuReducer } from './components/menu';
+import { reducer as filterReducer } from './components/filter';
+import { reducer as notesReducer } from './components/edit';
 // 利用redux-logger打印日志
 import { createLogger } from 'redux-logger'
 
