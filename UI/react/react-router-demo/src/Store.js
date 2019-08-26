@@ -22,7 +22,7 @@ const middleware = [];
 
 // 使用日志打印方法
 const loggerMiddleware = createLogger({collapsed: true});
-//记录路由记录 
+//记录路由记录 ·
 const _routerMiddleware=routerMiddleware(history);
 
 middleware.push(loggerMiddleware);
