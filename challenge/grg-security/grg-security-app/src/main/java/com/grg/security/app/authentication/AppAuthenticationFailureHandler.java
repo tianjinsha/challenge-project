@@ -28,7 +28,7 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
+                                        AuthenticationException exception) throws IOException {
 
         log.info("登录失败");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());

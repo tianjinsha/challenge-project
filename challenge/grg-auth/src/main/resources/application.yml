@@ -1,0 +1,40 @@
+server:
+  port: 2024
+
+spring:
+  application:
+    name: auth-server
+  redis:
+    host: challenge-redis
+    port: 6379
+    password:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://challenge-db:3306/challenge_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: challenge
+    password: 123456
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 30
+  client:
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://challenge:challenge@challenge-eureka:2010/eureka
+
+
+challenge:
+  security:
+    oauth2:
+      clients[0]:
+        clientId: challenge
+        clientSecret: challengeSecret
+        accessTokenValidateSeconds: 3600
+      storeType: redis
+
+
+

@@ -1,0 +1,24 @@
+server:
+  port: 2022
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - predicates:
+            - Path=/browser/**
+          filters:
+            - StripPrefix=1
+          uri: lb://grg-browser-demo
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 30
+  client:
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://challenge:challenge@challenge-eureka:2010/eureka

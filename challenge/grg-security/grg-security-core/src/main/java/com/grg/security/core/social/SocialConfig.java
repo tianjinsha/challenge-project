@@ -1,6 +1,6 @@
 package com.grg.security.core.social;
 
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.social.support.DefaultSpringSocialConfigurer;
 import com.grg.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

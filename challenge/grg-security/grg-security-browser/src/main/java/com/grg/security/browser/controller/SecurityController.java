@@ -2,16 +2,14 @@ package com.grg.security.browser.controller;
 
 import com.grg.common.util.R;
 import com.grg.common.util.RespCode;
-import com.grg.security.core.properties.SecurityConstants;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.ResponseType;
+import com.grg.security.common.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.social.support.SocialUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -28,7 +26,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 
 /**
  * 处理需要身份认证的请求
@@ -68,7 +65,8 @@ public class SecurityController {
         if (savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
             log.info("引发跳转的请求是:" + targetUrl);
-            if (StringUtils.endsWithIgnoreCase(targetUrl, HTML_SUFFIX)) {
+            if(StringUtils.endsWithIgnoreCase(targetUrl, HTML_SUFFIX )
+                    ||securityProperties.getBrowser().getResponseType().equals(ResponseType.HTML)){
                 redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }
@@ -107,15 +105,4 @@ public class SecurityController {
         return new R(RespCode.INVALID_SESSION, message);
     }
 
-
-    @GetMapping("/me")
-    public Object me(@AuthenticationPrincipal UserDetails user) {
-        return user;
-    }
-
-    @GetMapping("/info")
-    public Object info(Principal principal) {
-        Authentication authentication = (Authentication) principal;
-        return authentication.getPrincipal();
-    }
 }

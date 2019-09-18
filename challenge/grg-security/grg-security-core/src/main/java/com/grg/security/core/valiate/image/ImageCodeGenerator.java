@@ -3,7 +3,7 @@ package com.grg.security.core.valiate.image;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.grg.security.core.valiate.ValidateCode;
 import com.grg.security.core.valiate.ValidateCodeGenerator;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

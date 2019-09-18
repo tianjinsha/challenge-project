@@ -1,0 +1,50 @@
+auth-server-url: http://www.qixingshe.xyz:2024 # 授权服务地址
+
+server:
+  port: 2023
+
+spring:
+  application:
+    name: zuul-server
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 30
+  client:
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://challenge:challenge@challenge-eureka:2010/eureka
+
+zuul:
+  routes:
+    router-browser:
+      service-id: grg-browser-demo
+      path: /browser/**
+    router-app:
+      service-id: grg-app-demo
+      path: /app/**
+  ignored-services: '*'
+
+
+security:
+  oauth2:
+    client:
+      client-id: challenge
+      client-secret: challengeSecret
+      scope: all
+      access-token-uri: ${auth-server-url}/oauth/token
+      user-authorization-uri: ${auth-server-url}/oauth/authorize
+    resource:
+      token-info-uri: ${auth-server-url}/oauth/check_token #检查令牌
+#      jwt:
+#        key-uri: ${auth-server-url}/oauth/token_key #解析jwt令牌所需要密钥的地址
+#      user-info-uri: ${auth-server-url}/user
+challenge:
+  security:
+    ignore:
+      urls:
+        - /user
+

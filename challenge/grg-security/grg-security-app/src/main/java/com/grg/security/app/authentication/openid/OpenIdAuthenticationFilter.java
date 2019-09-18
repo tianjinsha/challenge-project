@@ -1,6 +1,6 @@
 package com.grg.security.app.authentication.openid;
 
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -16,20 +17,24 @@ import java.util.List;
 @Slf4j
 public class UserDetailServiceProviderImpl implements UserDetailsServiceProvider{
 
-    @Autowired
+    @Autowired(required = false)
     List<UserDetailServiceChoose> userDetailServiceChooses;
 
     @Override
     public UserDetailsService getService(String type) throws Exception {
 
-        for (UserDetailServiceChoose serviceChooses :userDetailServiceChooses){
-            if (serviceChooses.getType()==null){
-                throw new Exception("UserDetailServiceChoose实现方法中返回值不得为空");
-            }
-            if (serviceChooses.getType().equals(type)){
-                return  serviceChooses;
+        if(!CollectionUtils.isEmpty(userDetailServiceChooses)){
+            for (UserDetailServiceChoose serviceChooses :userDetailServiceChooses){
+                if (serviceChooses.getType()==null){
+                    log.error("UserDetailServiceChoose实现方法中返回值不得为空");
+                    throw new Exception("UserDetailServiceChoose实现方法中返回值不得为空");
+                }
+                if (serviceChooses.getType().equals(type)){
+                    return  serviceChooses;
+                }
             }
         }
+        log.warn("请提供[{}]的UserDetailServiceChoose接口实现",type);
         throw new AuthException("请提供["+type+"]的UserDetailServiceChoose接口实现");
     }
 }

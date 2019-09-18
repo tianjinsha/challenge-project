@@ -1,0 +1,72 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: grg-browser-demo
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://challenge-db:3306/challenge_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: challenge
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 30
+  client:
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://challenge:challenge@challenge-eureka:2010/eureka
+
+#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.grg.mapper
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #逻辑删除配置
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+challenge:
+  security:
+    code:
+      imageCode:
+        length: 4
+    social:
+      qq:
+        providerId: qq
+        app-id: 101543475
+        app-secret: 27534e32bca33b8cf9daa1db7149f7c7
+    ignore:
+      urls:
+        - /user/register
+        - /css/**
+        - /js/**
+    browser:
+      loginPage: /auth-normal-signIn.html
+#      singInSuccessUrl: /mine.html
+      loginType: REDIRECT
+      responseType : HTML
+      registerPage: /register.html

@@ -1,7 +1,7 @@
 package com.grg.security.app.server;
 
 import com.grg.security.app.jwt.AppJwtTokenEnhancer;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * @author tjshan
@@ -27,7 +26,6 @@ public class TokenStoreConfig {
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
-
     /**
      * 使用redis存储token的配置，只有在challenge.security.oauth2.tokenStore配置为redis时生效
      * @return
@@ -37,7 +35,7 @@ public class TokenStoreConfig {
             name = "storeType",
             havingValue = "redis")
     public TokenStore redisTokenStore() {
-        return new RedisTokenStore(redisConnectionFactory);
+        return new AppRedisTokenStore(redisConnectionFactory);
     }
 
 

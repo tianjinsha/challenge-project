@@ -1,6 +1,6 @@
 package com.grg.security.core.valiate;
 
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 
 /**
  * @author tjshan

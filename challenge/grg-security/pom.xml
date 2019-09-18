@@ -13,12 +13,17 @@
 
     <properties>
         <kaptcha.version>2.3.2</kaptcha.version>
+        <jwt.verson>0.9.0</jwt.verson>
     </properties>
 
     <modules>
         <module>grg-security-core</module>
         <module>grg-security-browser</module>
         <module>grg-security-app</module>
+        <module>grg-security-sso</module>
+        <module>grg-security-resource</module>
+        <module>grg-security-common</module>
+        <module>grg-security-authorize</module>
     </modules>
 
     <dependencies>
@@ -27,11 +32,14 @@
             <artifactId>grg-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <!-- oauth2 授权管理 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
         </dependency>
         <!-- spring-social -start -->
         <dependency>
@@ -51,11 +59,6 @@
             <artifactId>spring-social-web</artifactId>
         </dependency>
 
-        <!--数据库-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

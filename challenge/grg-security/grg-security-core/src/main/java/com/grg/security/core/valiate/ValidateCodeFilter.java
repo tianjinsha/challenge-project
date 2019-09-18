@@ -1,7 +1,7 @@
 package com.grg.security.core.valiate;
 
-import com.grg.security.core.properties.SecurityConstants;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -62,7 +62,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
 
-        urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
+//        urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
         addUrlToMap(securityProperties.getCode().getImageCode().getUrl(), ValidateCodeType.IMAGE);
 
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);

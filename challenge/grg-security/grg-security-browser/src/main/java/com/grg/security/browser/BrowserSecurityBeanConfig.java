@@ -3,7 +3,7 @@ package com.grg.security.browser;
 import com.grg.security.browser.logout.DefaultLogoutSuccessHandler;
 import com.grg.security.browser.session.ChallengeInvalidSessionStrategy;
 import com.grg.security.browser.session.ExpiredSessionStrategy;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

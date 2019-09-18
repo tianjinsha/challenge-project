@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.*;
@@ -38,6 +39,9 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private  static final String TOKEN_HEADER="Basic ";
 
     @Override
@@ -63,7 +67,8 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 
         if (clientDetails == null) {
             throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
-        } else if (!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)) {
+        } else if (!passwordEncoder.matches(clientSecret,clientDetails.getClientSecret())) {
+
             throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientId);
         }
 

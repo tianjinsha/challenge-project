@@ -3,7 +3,7 @@ package com.grg.security.app.server;
 import com.grg.security.app.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import com.grg.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.grg.security.core.authorize.AuthorizeConfigManager;
-import com.grg.security.core.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityConstants;
 import com.grg.security.core.valiate.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -63,4 +63,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         // 引用默认配置
         authorizeConfigManager.config(http.authorizeRequests());
     }
+
 }

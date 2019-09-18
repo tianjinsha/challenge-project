@@ -1,0 +1,16 @@
+security:
+  oauth2:
+    client:
+      clientId: challenge2
+      clientSecret: challengeSecret2
+      user-authorization-uri: http://www.qixingshe.xyz:8010/server/oauth/authorize
+      access-token-uri: http://www.qixingshe.xyz:8010/server/oauth/token
+    resource:
+      jwt:
+        key-uri: http://www.qixingshe.xyz:8010/server/oauth/token_key
+
+
+
+server:
+  port: 8012
+  context-path: /client2

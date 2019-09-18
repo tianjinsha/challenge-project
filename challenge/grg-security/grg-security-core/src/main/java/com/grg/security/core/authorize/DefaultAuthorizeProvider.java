@@ -1,7 +1,7 @@
 package com.grg.security.core.authorize;
 
-import com.grg.security.core.properties.SecurityConstants;
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityConstants;
+import com.grg.security.common.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -29,8 +29,7 @@ public class DefaultAuthorizeProvider  implements AuthorizeConfigProvider{
                 SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                 securityProperties.getBrowser().getLoginPage(),
                 securityProperties.getBrowser().getRegisterPage(),
-                securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                "/css/**","/js/**")
+                securityProperties.getBrowser().getSession().getSessionInvalidUrl())
                 .permitAll();
 
         if (StringUtils.isNotBlank(securityProperties.getBrowser().getSignOutUrl())) {

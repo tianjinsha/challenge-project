@@ -10,14 +10,21 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-        <spring-platform.version>Cairo-SR8</spring-platform.version>
+        <spring-cloud.version>Finchley.SR4</spring-cloud.version>
+        <spring-platform.version>Cairo-SR6</spring-platform.version>
 
+        <eureka.version>1.4.2.RELEASE</eureka.version>
+        <zuul.version>1.4.2.RELEASE</zuul.version>
         <fastjson.version>1.2.58</fastjson.version>
+        <swagger2.version>2.9.0</swagger2.version>
+        <jwt.verson>0.9.0</jwt.verson>
+        <mybatis-plus.version>2.3.3</mybatis-plus.version>
+        <ttl.version>2.2.0</ttl.version>
+        <hutool.version>3.3.2</hutool.version>
     </properties>
 
     <dependencies>
@@ -33,11 +40,10 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--配置中心-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-config</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -67,8 +73,17 @@
     </dependencyManagement>
 
     <modules>
-
+        <module>grg-eureka</module>
+        <module>grg-common</module>
         <module>grg-security</module>
+        <module>grg-app-demo</module>
+        <module>grg-sso-server</module>
+        <module>grg-sso-client1</module>
+        <module>grg-sso-client2</module>
+        <module>grg-gateway</module>
+        <module>grg-zuul</module>
+        <module>grg-auth</module>
+        <module>grg-browser-demo</module>
     </modules>
 
     <build>

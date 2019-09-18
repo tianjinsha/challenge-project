@@ -1,6 +1,6 @@
 package com.grg.security.core.valiate;
 
-import com.grg.security.core.properties.SecurityProperties;
+import com.grg.security.common.properties.SecurityProperties;
 import com.grg.security.core.valiate.image.ImageCodeGenerator;
 import com.grg.security.core.valiate.sms.DefaultSmsCodeSender;
 import com.grg.security.core.valiate.sms.SmsCodeSender;
