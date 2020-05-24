@@ -1,40 +1,40 @@
 <template>
-	<div class="box2">
-	<div class="left">
-    <img  src="../../assets/images/favicon.png" alt="笔记">
-    <h3>vue笔记本</h3>
+  <div class="box2">
+    <div class="left">
+      <img src="../../assets/images/favicon.png" alt="笔记" />
+      <h3>vue笔记本</h3>
+    </div>
   </div>
-	</div>
 </template>
 
-<script>	
+<script>
 export default {
   data() {
-    return {}
+    return {};
   }
-}
+};
 </script>
 
 <style scoped lang="less">
-.box2{
-  height:80px;
-  line-height: 80px;
-  background: #409EFF;
+.box2 {
+  height: 60px;
+  line-height: 60px;
+  background: #409eff;
 }
-.left{
+.left {
   display: flex;
   align-items: center;
   width: 200px;
-  img{
+  img {
     display: block;
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
   }
-  h3{
+  h3 {
     margin-left: 10px;
-    flex:  1 0 auto;
+    flex: 1 0 auto;
     color: #f1f1f1;
-    font-size: 25px;
+    font-size: 24px;
     letter-spacing: 1px;
     font-weight: 600;
   }
