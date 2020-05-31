@@ -89,9 +89,12 @@ export default {
       active2: false
     };
   },
+  created(){
+    console.debug('enter Login page')
+  },
   methods: {
     selectType(type) {
-      console.log("select type is " + type);
+      console.debug("select type is " + type);
       if (type == 1) {
         this.active1 = true;
         this.active2 = false;

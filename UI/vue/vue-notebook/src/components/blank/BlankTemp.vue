@@ -1,6 +1,5 @@
 <template>
-  <div class="box">
-  </div>
+  <div class="box"></div>
 </template>
 
 <script>
@@ -9,12 +8,11 @@ export default {
   data() {
     return {};
   },
-  methods:{
-
-  },
-  props: {
-
-  }
+  created() {},
+  mounted() {},
+  destroyed() {},
+  methods: {},
+  props: {}
 };
 </script>
 

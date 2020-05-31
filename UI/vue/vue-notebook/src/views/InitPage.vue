@@ -5,10 +5,16 @@
 </template>
 
 <script>
+import commonFunc from '@/utils/commonFunc'
 export default {
   name: "initPage",
   data() {
     return {};
+  },
+  async created(){
+    console.debug('enter initPage page')
+    await commonFunc.sleep(3000)
+    this.$router.push({path:'home'})
   },
   methods:{
 

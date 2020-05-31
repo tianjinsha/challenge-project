@@ -37,7 +37,6 @@ import Header from "../components/base/Header.vue";
 import Menu from "../components/base/Menu.vue";
 import TodoLsit from "../components/TodoList.vue";
 import { VueEditor } from "vue2-editor";
-
 export default {
   name: "home",
   data() {
@@ -50,6 +49,13 @@ export default {
     Menu,
     TodoLsit,
     VueEditor
+  },
+  created(){
+    console.debug('enter Home page')
+    this.$store.commit('todo/setCurrentMenu',{
+      id:'',
+      pid:''
+    }),{root:true}
   },
   methods: {},
   props: {}
