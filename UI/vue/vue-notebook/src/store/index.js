@@ -35,6 +35,7 @@ const store = new Vuex.Store({
       namespaced: true,
       state: {
         currentMenu: {},
+        currentNote:{},
         todoList: [{
             id: '0',
             pid: '',
@@ -81,18 +82,27 @@ const store = new Vuex.Store({
             return item.pid === pid
           })
         },
+        
         getCurrentTodoList: (state) => {
           return state.todoList.filter(item => {
             return state.currentMenu.id === item.pid
           })
+        },
+        getCurrentNote:(state)=>{
+          return state.currentNote
         }
       },
       mutations: {
         setCurrentMenu: (state, content) => {
           state.currentMenu = content
         },
+        setCurrentNote:(state,content)=>{
+          state.currentNote = state.todoList.find(item=>{
+            return item.id === content
+          })
+        },
         toggleRemoveMenu: (state, content) => {
-          state.menuList = state.menuList.map(item => {
+          state.todoList = state.todoList.map(item => {
             if (item.id === content.id) {
               return {
                 ...item,
@@ -104,15 +114,15 @@ const store = new Vuex.Store({
           })
         },
         addMenu: (state, content) => {
-          state.menuList.push(content)
+          state.todoList.push(content)
         },
         deleteMenu: (state, content) => {
-          state.menuList = state.menuList.filter(item => {
+          state.todoList = state.todoList.filter(item => {
             return item.id !== content.id
           })
         },
         clearMenu: (state) => {
-          state.menuList.length = 0
+          state.todoList.length = 0
         }
       },
       action: {

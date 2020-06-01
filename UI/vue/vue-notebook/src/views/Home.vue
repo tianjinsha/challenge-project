@@ -15,14 +15,13 @@
             <TodoLsit></TodoLsit>
             <div class="article">
               <div class="a-header">
-                <h3>文章标题</h3>
+                <h3>{{getCurrentNote.title}}</h3>
                 <div class="a-action">
                   <el-button>保存</el-button>
                 </div>
               </div>
-              
               <div class="a-editor">
-                <vue-editor v-model="content"></vue-editor>
+                <vue-editor v-model="getCurrentNote.content"></vue-editor>
               </div>
             </div>
           </div>
@@ -37,11 +36,13 @@ import Header from "../components/base/Header.vue";
 import Menu from "../components/base/Menu.vue";
 import TodoLsit from "../components/TodoList.vue";
 import { VueEditor } from "vue2-editor";
+import { mapGetters } from "vuex";
 export default {
   name: "home",
   data() {
     return {
-      content: "空白笔记……"
+      title: "",
+      content: ""
     };
   },
   components: {
@@ -50,15 +51,22 @@ export default {
     TodoLsit,
     VueEditor
   },
-  created(){
-    console.debug('enter Home page')
-    this.$store.commit('todo/setCurrentMenu',{
-      id:'',
-      pid:''
-    }),{root:true}
+  created() {
+    console.debug("enter Home page");
+    this.$store.commit("todo/setCurrentMenu", {
+      id: "",
+      pid: ""
+    }),
+      { root: true };
   },
+  props: {},
   methods: {},
-  props: {}
+  computed: {
+    ...mapGetters({
+      getCurrentTodoList: "todo/getCurrentTodoList",
+      getCurrentNote: "todo/getCurrentNote"
+    })
+  }
 };
 </script>
 

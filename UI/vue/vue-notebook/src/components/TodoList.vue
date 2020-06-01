@@ -46,10 +46,12 @@ export default {
 .box {
   width: 280px;
   border-right: 1px solid #eee;
+  border-left: 1px solid #eee;
   border-top: 0;
   border-bottom: 0;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 .action {
   height: 80px;
