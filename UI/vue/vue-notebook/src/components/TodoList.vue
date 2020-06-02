@@ -2,7 +2,8 @@
   <div class="box">
     <!-- 搜索 -->
     <div class="action">
-      <el-button type="primary" icon="el-icon-top"></el-button>
+      <el-button type="primary" icon="el-icon-top" @click="goBack()" v-if="backEnable"></el-button>
+      <el-button type="primary" icon="el-icon-top" @click="goBack()" disabled v-else></el-button>
       <el-input placeholder="请输入内容" v-model="content" clearable>
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
@@ -10,7 +11,7 @@
     <!-- 笔记列表 -->
     <div class="todo-wrap">
       <div class="todo-list">
-        <TodoItem v-for="item in getCurrentTodoList" :key="item.id" :content="item"></TodoItem>
+        <TodoItem v-for="item in getCurrentTodoList" :key="item.id" :content="item" @chanageGoBack = 'changeGoBack'></TodoItem>
       </div>
     </div>
   </div>
@@ -19,23 +20,63 @@
 <script>
 import TodoItem from "./TodoItem";
 import { mapGetters } from "vuex";
+
 export default {
   name: "TodoList",
   data() {
     return {
-      content: ""
+      content: "",
+      backEnable:false
     };
   },
   created() {
-    console.debug('currentTodoList is')
-    console.debug(this.getCurrentTodoList)
+    console.debug("currentTodoList is");
+    console.debug(this.getCurrentTodoList);
   },
   components: {
     TodoItem
   },
+  methods: {
+    goBack() {
+      console.debug("return to the upper level");
+      let prevMenu = this.getPrevMenu;
+      let currentMenu = this.getCurrentMenu;
+      if (currentMenu && currentMenu.id !=="") {
+        if (prevMenu) {
+          console.debug("prevMenu is ");
+          console.debug(prevMenu);
+          this.backEnable = true
+        } else {
+          this.backEnable = false
+          console.debug("prev Menu is top menu");
+        }
+
+        if (prevMenu && prevMenu.id !== "") {
+          this.$store.commit("todo/setCurrentMenu", {
+            id: prevMenu.id,
+            pid: prevMenu.pid
+          });
+        } else {
+          this.$store.commit("todo/setCurrentMenu", {
+            id: "",
+            pid: ""
+          });
+        }
+      }else{
+        this.backEnable = false
+        
+      }
+    },
+    changeGoBack(){
+      this.backEnable = true
+    }
+  },
   computed: {
     ...mapGetters({
-      getCurrentTodoList: "todo/getCurrentTodoList"
+      getCurrentTodoList: "todo/getCurrentTodoList",
+      getPrevMenu: "todo/getPrevMenu",
+      getCurrentMenu: "todo/getCurrentMenu",
+      getMenuById: "todo/getMenuById"
     })
   }
 };

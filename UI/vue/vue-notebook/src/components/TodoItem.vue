@@ -64,15 +64,14 @@ export default {
     },
     handle() {
       if (this.content.type === "menu") {
-        this.enterNextMenu(this.content.id);
+        this.$emit('chanageGoBack', true);
+        this.enterNextMenu(this.content.id,this.content.pid);
       } else if (this.content.type === "note") {
-        this.showNote(this.content.id,this.content.pid);
+        this.showNote(this.content.id);
       }
     },
     enterNextMenu(id,pid) {
-      console.info("next menu id is {" + id + "}");
-      console.log(this.$store)
-       console.log(this.$store._mutations)
+      console.info("current menu id is {" + id + "} and pid is {"+pid +"}");
        this.$store.commit('todo/setCurrentMenu',{
          id,
          pid
@@ -80,7 +79,6 @@ export default {
     },
     showNote(id) {
       console.info("current note id is {" + id + "}");
-      console.log(this.$store)
       this.$store.commit('todo/setCurrentNote',id)
     }
   },
