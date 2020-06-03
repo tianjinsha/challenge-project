@@ -3,15 +3,15 @@
     <!-- 新建文件 -->
     <div class="action">
       <i class="add el-icon-plus"></i>
-      <el-dropdown class="dropdown">
+      <el-dropdown class="dropdown" @command="addTodo">
         <span class="el-dropdown-link">
           新文档
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>新建笔记</el-dropdown-item>
+          <el-dropdown-item command="note">新建笔记</el-dropdown-item>
           <el-dropdown-item>新建Markdown</el-dropdown-item>
-          <el-dropdown-item>新建文件夹</el-dropdown-item>
+          <el-dropdown-item command="menu">新建文件夹</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -36,9 +36,41 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import commonFunc from '@/utils/commonFunc'
 export default {
   data() {
     return {};
+  },
+  methods: {
+    addTodo(args) {
+      console.log("add todo type is: " + args);
+      let currrentMenu = this.getCurrentMenu;
+      if (args === "note") {
+        this.$store.commit("todo/addTodo", {
+          id: commonFunc.uuid(),
+          pid: currrentMenu.id,
+          type: "note",
+          title: "无标题文档",
+          deleted: false,
+          createTime: new Date().getTime()
+        });
+      } else if (args === "menu") {
+        this.$store.commit("todo/addTodo", {
+          id: commonFunc.uuid(),
+          pid: currrentMenu.id,
+          type: "menu",
+          title: "新建文件夹",
+          deleted: false,
+          createTime: new Date().getTime()
+        });
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentMenu: "todo/getCurrentMenu"
+    })
   }
 };
 </script>
@@ -66,7 +98,7 @@ export default {
   }
   .dropdown {
     margin-left: 12px;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
   }
 }
@@ -83,7 +115,7 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
-  left:0;
+  left: 0;
   width: 215px;
   overflow-x: hidden;
   overflow-y: auto;

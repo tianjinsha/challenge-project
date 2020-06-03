@@ -36,7 +36,7 @@ const store = new Vuex.Store({
       state: {
         currentMenu: {},
         currentNote: {},
-        goBackEnable:false,
+        goBackEnable: false,
         todoList: [{
             id: '0',
             pid: '',
@@ -44,7 +44,6 @@ const store = new Vuex.Store({
             title: '新建文件夹1',
             deleted: false,
             createTime: new Date().getTime(),
-            content: 'test'
           },
           {
             id: '1',
@@ -53,13 +52,13 @@ const store = new Vuex.Store({
             title: '新建文件夹2',
             deleted: false,
             createTime: new Date().getTime(),
-            content: 'test'
           },
           {
             id: '2',
             pid: '',
             type: 'note',
             title: '无标题文档1',
+            star: true,
             deleted: false,
             createTime: new Date().getTime(),
             content: 'test'
@@ -70,6 +69,7 @@ const store = new Vuex.Store({
             type: 'note',
             title: '无标题文档2',
             deleted: false,
+            star: false,
             createTime: new Date().getTime(),
             content: 'test'
           },
@@ -80,7 +80,6 @@ const store = new Vuex.Store({
             title: '新建文件夹3',
             deleted: false,
             createTime: new Date().getTime(),
-            content: 'test'
           },
           {
             id: '5',
@@ -88,6 +87,7 @@ const store = new Vuex.Store({
             type: 'note',
             title: '无标题文3',
             deleted: false,
+            star: false,
             createTime: new Date().getTime(),
             content: 'test'
           },
@@ -102,7 +102,8 @@ const store = new Vuex.Store({
               pid: item.pid,
               deleted: item.deleted,
               title: item.title,
-              createTime: item.createTime
+              createTime: item.createTime,
+              type:item.type
             }
           })
         },
@@ -119,22 +120,26 @@ const store = new Vuex.Store({
           })
         },
         // 上一级目录项
-        getPrevMenu: (state,getters)=>{
+        getPrevMenu: (state, getters) => {
           return getters.getMenuList.find(item => {
-            // if(state.currentMenu.pid){
-            //    return item.id === state.currentMenu.pid
-            // }else{
-            //   return 
-            // }
-
             return item.id === state.currentMenu.pid
 
           })
         },
         // 获取当前目录下的所有目录项和笔记项
-        getCurrentTodoList: (state) => {
-          return state.todoList.filter(item => {
+        getCurrentTodoList: (state, getters) => {
+          return getters.getMenuList.filter(item => {
             return state.currentMenu.id === item.pid
+          }).sort((a, b) => {
+            if (a.type === b.type) {
+              return 0
+            } else {
+              if (a.type === 'menu') {
+                return -1
+              } else {
+                return 1
+              }
+            }
           })
         },
         // 获取当前目录项
@@ -145,7 +150,7 @@ const store = new Vuex.Store({
         getCurrentNote: (state) => {
           return state.currentNote
         },
-        getGoBackEnable:(state)=>{
+        getGoBackEnable: (state) => {
           return state.goBackEnable
         }
       },
@@ -160,27 +165,27 @@ const store = new Vuex.Store({
             return item.id === content
           })
         },
-        toggleRemoveMenu: (state, content) => {
+        addTodo: (state, content) => {
+          state.todoList.push(content)
+        },
+        modifyTodo: (state, content) => {
           state.todoList = state.todoList.map(item => {
             if (item.id === content.id) {
               return {
                 ...item,
-                deleted: content.deleted
+                ...content
               }
-            } else {
+            }else{
               return item
             }
           })
         },
-        addMenu: (state, content) => {
-          state.todoList.push(content)
-        },
-        deleteMenu: (state, content) => {
+        deleteTodo: (state, content) => {
           state.todoList = state.todoList.filter(item => {
             return item.id !== content.id
           })
         },
-        clearMenu: (state) => {
+        clearTodo: (state) => {
           state.todoList.length = 0
         }
       },

@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="right">
-        <i class="el-icon-star-off icon" v-if="content.type==='menu'"></i>
-        <i class="el-icon-delete icon"></i>
+        <i class="icon" v-bind:class="{'el-icon-star-off':!star,'el-icon-star-on':this.star,'star':star}" v-if="content.type==='note'" @click.stop="starNote"></i>
+        <i class="el-icon-delete icon" @click.stop="removeTodo"></i>
       </div>
     </div>
     <div>
@@ -32,12 +32,16 @@ export default {
   data() {
     return {
       dateFormat: "YYYY-MM-DD hh:mm",
-      isActive: false
+      isActive: false,
+      star:false,
     };
   },
 
-  created() {},
-  mounted() {},
+  created() {
+    this.star = this.content.star
+  },
+  mounted() {
+  },
   destroyed() {},
   props: {
     content: {
@@ -48,6 +52,7 @@ export default {
           title: dataDictionary.default.todoTitle,
           type: dataDictionary.todoType.note,
           pid: "",
+          star:false,
           deleted: false,
           createTime: new Date().getTime()
         };
@@ -80,6 +85,22 @@ export default {
     showNote(id) {
       console.info("current note id is {" + id + "}");
       this.$store.commit('todo/setCurrentNote',id)
+    },
+    starNote(){
+      this.star = !this.star
+      console.debug("star note:"+this.star);
+      
+      this.$store.commit('todo/modifyTodo',{
+        id:this.content.id,
+        star:this.star
+      })
+    },
+    removeTodo(){
+       console.debug("delete todo:"+this.content.id);
+      this.$store.commit('todo/modifyTodo',{
+        id:this.content.id,
+        deleted:this.content.deleted
+      })
     }
   },
   computed: {
@@ -93,6 +114,9 @@ export default {
 <style scoped lang="less">
 .active {
   background: rgba(0, 0, 0, 0.1);
+}
+.star{
+  color: #f60;
 }
 .todo-item {
   width: 280px;
