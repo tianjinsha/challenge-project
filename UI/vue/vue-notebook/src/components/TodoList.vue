@@ -11,7 +11,7 @@
     <!-- 笔记列表 -->
     <div class="todo-wrap">
       <div class="todo-list">
-        <TodoItem v-for="item in getCurrentTodoList" :key="item.id" :content="item" @chanageGoBack = 'changeGoBack'></TodoItem>
+        <TodoItem v-for="item in getCurrentTodoListEnable" :key="item.id" :content="item" @chanageGoBack = 'changeGoBack'></TodoItem>
       </div>
     </div>
   </div>
@@ -26,12 +26,14 @@ export default {
   data() {
     return {
       content: "",
-      backEnable:false
+      backEnable:false,
+      activeMenu:'',
     };
   },
   created() {
     console.debug("currentTodoList is");
-    console.debug(this.getCurrentTodoList);
+    console.debug(this.getCurrentTodoListEnable);
+    this.activeMenu = this.getActiveMenu
   },
   components: {
     TodoItem
@@ -73,10 +75,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getCurrentTodoList: "todo/getCurrentTodoList",
+      getCurrentTodoListEnable: "todo/getCurrentTodoListEnable",
       getPrevMenu: "todo/getPrevMenu",
       getCurrentMenu: "todo/getCurrentMenu",
-      getMenuById: "todo/getMenuById"
+      getMenuById: "todo/getMenuById",
+      getActiveMenu:'getActiveMenu'
     })
   }
 };

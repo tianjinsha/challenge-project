@@ -2,10 +2,10 @@
   <div class="box">
     <!-- 新建文件 -->
     <div class="action">
-      <i class="add el-icon-plus"></i>
-      <el-dropdown class="dropdown" @command="addTodo">
+      <el-dropdown class="dropdown" @command="addTodo" trigger="click">
         <span class="el-dropdown-link">
-          新文档
+          <i class="add el-icon-plus"></i>
+          <span> 新文档 </span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -18,16 +18,16 @@
     <!-- 目录列表 -->
     <div class="menu-wrap">
       <ul class="menu-list">
-        <li class="menu-item active">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ===1 }" @click="changeMenu(1)">
           <i class="el-icon-copy-document"></i> 最新文档
         </li>
-        <li class="menu-item">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ===2 }" @click="changeMenu(2)">
           <i class="el-icon-folder"></i> 我的文件夹
         </li>
-        <li class="menu-item">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ===3 }" @click="changeMenu(3)">
           <i class="el-icon-star-off"></i> 加星文件
         </li>
-        <li class="menu-item">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ===4 }" @click="changeMenu(4)">
           <i class="el-icon-delete"></i> 回收站
         </li>
       </ul>
@@ -37,12 +37,19 @@
 
 <script>
 import { mapGetters } from "vuex";
-import commonFunc from '@/utils/commonFunc'
+import commonFunc from "@/utils/commonFunc";
 export default {
   data() {
-    return {};
+    return {
+      activeMenu:'',
+    };
+  },
+  created(){
+    this.activeMenu =this.getActiveMenu
+    console.log("current menu is "+this.activeMenu)
   },
   methods: {
+    // 添加todo
     addTodo(args) {
       console.log("add todo type is: " + args);
       let currrentMenu = this.getCurrentMenu;
@@ -65,11 +72,18 @@ export default {
           createTime: new Date().getTime()
         });
       }
+    },
+    // 改变目录
+    changeMenu(args){
+      this.activeMenu = args
+      console.debug("current menu is "+this.activeMenu)
+
     }
   },
   computed: {
     ...mapGetters({
-      getCurrentMenu: "todo/getCurrentMenu"
+      getCurrentMenu: "todo/getCurrentMenu",
+      getActiveMenu:'getActiveMenu'
     })
   }
 };
@@ -86,15 +100,19 @@ export default {
 
 .action {
   height: 80px;
-  line-height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #eee;
+  .el-dropdown-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .add {
-    color: #409eff;
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 600;
+    padding-right: 15px;
   }
   .dropdown {
     margin-left: 12px;
@@ -120,6 +138,7 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   .menu-item {
+    cursor: pointer;
     height: 48px;
     line-height: 48px;
     text-indent: 15px;
@@ -137,5 +156,13 @@ export default {
       color: #f1f1f1;
     }
   }
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
 }
 </style>

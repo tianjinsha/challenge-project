@@ -6,16 +6,23 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   namespaced: true,
   state: {
-    test: 'test'
+    test: 'test',
+    activeMenu:'1'
   },
   getters: {
     getTest: (state) => {
       return state.test
+    },
+    getActiveMenu:(state)=>{
+      return state.activeMenu  
     }
   },
   mutations: {
     setTest: (state, content) => {
       state.test = content
+    },
+    setActive:(state,content)=>{
+      state.activeMenu = content
     }
   },
   actions: {},
@@ -142,6 +149,11 @@ const store = new Vuex.Store({
             }
           })
         },
+        getCurrentTodoListEnable: (state, getters) => {
+          return getters.getCurrentTodoList.filter(item=>{
+            return !item.deleted
+          })
+        },
         // 获取当前目录项
         getCurrentMenu: (state) => {
           return state.currentMenu
@@ -184,6 +196,9 @@ const store = new Vuex.Store({
           state.todoList = state.todoList.filter(item => {
             return item.id !== content.id
           })
+        },
+        deleteTodo2:()=>{
+          
         },
         clearTodo: (state) => {
           state.todoList.length = 0

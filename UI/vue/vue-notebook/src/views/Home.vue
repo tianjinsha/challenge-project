@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       title: "",
-      content: ""
+      content: "",
     };
   },
   components: {
@@ -56,8 +56,8 @@ export default {
     this.$store.commit("todo/setCurrentMenu", {
       id: "",
       pid: ""
-    }),
-      { root: true };
+    });
+    this.$store.commit("setActive",2)
   },
   props: {},
   methods: {},

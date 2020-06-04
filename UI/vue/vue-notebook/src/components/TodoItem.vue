@@ -99,7 +99,7 @@ export default {
        console.debug("delete todo:"+this.content.id);
       this.$store.commit('todo/modifyTodo',{
         id:this.content.id,
-        deleted:this.content.deleted
+        deleted:!this.content.deleted
       })
     }
   },
