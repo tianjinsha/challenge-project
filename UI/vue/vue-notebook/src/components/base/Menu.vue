@@ -18,16 +18,16 @@
     <!-- 目录列表 -->
     <div class="menu-wrap">
       <ul class="menu-list">
-        <li class="menu-item" v-bind:class="{ active: activeMenu ===1 }" @click="changeMenu(1)">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ==='1' }" @click="changeMenu('1')">
           <i class="el-icon-copy-document"></i> 最新文档
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ===2 }" @click="changeMenu(2)">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ==='2' }" @click="changeMenu('2')">
           <i class="el-icon-folder"></i> 我的文件夹
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ===3 }" @click="changeMenu(3)">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ==='3' }" @click="changeMenu('3')">
           <i class="el-icon-star-off"></i> 加星文件
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ===4 }" @click="changeMenu(4)">
+        <li class="menu-item" v-bind:class="{ active: activeMenu ==='4' }" @click="changeMenu('4')">
           <i class="el-icon-delete"></i> 回收站
         </li>
       </ul>
@@ -77,7 +77,7 @@ export default {
     changeMenu(args){
       this.activeMenu = args
       console.debug("current menu is "+this.activeMenu)
-
+      this.$store.commit('setActiveMenu',args)
     }
   },
   computed: {

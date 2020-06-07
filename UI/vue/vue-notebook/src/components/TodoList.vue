@@ -11,7 +11,12 @@
     <!-- 笔记列表 -->
     <div class="todo-wrap">
       <div class="todo-list">
-        <TodoItem v-for="item in getCurrentTodoListEnable" :key="item.id" :content="item" @chanageGoBack = 'changeGoBack'></TodoItem>
+        <TodoItem
+          v-for="item in todoList"
+          :key="item.id"
+          :content="item"
+          @chanageGoBack="changeGoBack"
+        ></TodoItem>
       </div>
     </div>
   </div>
@@ -20,36 +25,36 @@
 <script>
 import TodoItem from "./TodoItem";
 import { mapGetters } from "vuex";
+import todoFunc from "@/utils/todoFunc";
 
 export default {
   name: "TodoList",
   data() {
     return {
       content: "",
-      backEnable:false,
-      activeMenu:'',
+      backEnable: false,
+      activeMenu: ""
     };
   },
   created() {
-    console.debug("currentTodoList is");
-    console.debug(this.getCurrentTodoListEnable);
-    this.activeMenu = this.getActiveMenu
+    this.activeMenu = this.getActiveMenu;
+    console.debug("activeMenu is :" + this.activeMenu);
   },
   components: {
     TodoItem
   },
   methods: {
     goBack() {
-      console.debug("return to the upper level");
+      console.info("return prev menu");
       let prevMenu = this.getPrevMenu;
       let currentMenu = this.getCurrentMenu;
-      if (currentMenu && currentMenu.id !=="") {
+      if (currentMenu && currentMenu.id !== "") {
         if (prevMenu) {
           console.debug("prevMenu is ");
           console.debug(prevMenu);
-          this.backEnable = true
+          this.backEnable = true;
         } else {
-          this.backEnable = false
+          this.backEnable = false;
           console.debug("prev Menu is top menu");
         }
 
@@ -64,22 +69,43 @@ export default {
             pid: ""
           });
         }
-      }else{
-        this.backEnable = false
-        
+      } else {
+        this.backEnable = false;
       }
     },
-    changeGoBack(){
-      this.backEnable = true
+    changeGoBack() {
+      this.backEnable = true;
+    },
+    selectTodoList(args) {
+      let list = [];
+      switch (args) {
+        case "1":
+          list = todoFunc.getLastedNote();
+          break;
+        case "2":
+          list = todoFunc.getCurrentTodoEnable();
+          break;
+        case "3":
+          list = todoFunc.getStarNote();
+          break;
+        case "4":
+          list = todoFunc.getDeletedTodo();
+          break;
+        default:
+          break;
+      }
+      return list;
     }
   },
   computed: {
+    todoList() {
+      return this.selectTodoList(this.getActiveMenu);
+    },
     ...mapGetters({
-      getCurrentTodoListEnable: "todo/getCurrentTodoListEnable",
       getPrevMenu: "todo/getPrevMenu",
       getCurrentMenu: "todo/getCurrentMenu",
       getMenuById: "todo/getMenuById",
-      getActiveMenu:'getActiveMenu'
+      getActiveMenu: "getActiveMenu"
     })
   }
 };

@@ -57,7 +57,7 @@ export default {
       id: "",
       pid: ""
     });
-    this.$store.commit("setActive",2)
+    this.$store.commit("setActiveMenu",'2')
   },
   props: {},
   methods: {},

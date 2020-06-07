@@ -7,6 +7,12 @@ const data = {
   todoType: {
     menu: 'menu',
     note: 'note'
+  },
+  menuType: {
+    latest: '1',
+    folder: '2',
+    star: '3',
+    trash: '4'
   }
 }
 

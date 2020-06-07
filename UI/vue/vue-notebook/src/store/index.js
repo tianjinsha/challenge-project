@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     setTest: (state, content) => {
       state.test = content
     },
-    setActive:(state,content)=>{
+    setActiveMenu:(state,content)=>{
       state.activeMenu = content
     }
   },
@@ -102,12 +102,13 @@ const store = new Vuex.Store({
       },
       getters: {
         // 获取所有目录项
-        getMenuList: (state) => {
+        getTodoList: (state) => {
           return state.todoList.map(item => {
             return {
               id: item.id,
               pid: item.pid,
               deleted: item.deleted,
+              star:item.star,
               title: item.title,
               createTime: item.createTime,
               type:item.type
@@ -115,43 +116,28 @@ const store = new Vuex.Store({
           })
         },
         // 获取属于该pid下的下一级直接子目录项
-        getMenuListByPid: (state, getters) => (pid) => {
-          return getters.getMenuList.find(item => {
+        getTodoListByPid: (state, getters) => (pid) => {
+          return getters.getTodoList.find(item => {
             return item.pid === pid
           })
         },
         // 通过id定位目录项
         getMenuById: (state, getters) => (id) => {
-          return getters.getMenuList.find(item => {
+          return getters.getTodoList.find(item => {
             return item.id === id
           })
         },
         // 上一级目录项
         getPrevMenu: (state, getters) => {
-          return getters.getMenuList.find(item => {
+          return getters.getTodoList.find(item => {
             return item.id === state.currentMenu.pid
 
           })
         },
         // 获取当前目录下的所有目录项和笔记项
         getCurrentTodoList: (state, getters) => {
-          return getters.getMenuList.filter(item => {
+          return getters.getTodoList.filter(item => {
             return state.currentMenu.id === item.pid
-          }).sort((a, b) => {
-            if (a.type === b.type) {
-              return 0
-            } else {
-              if (a.type === 'menu') {
-                return -1
-              } else {
-                return 1
-              }
-            }
-          })
-        },
-        getCurrentTodoListEnable: (state, getters) => {
-          return getters.getCurrentTodoList.filter(item=>{
-            return !item.deleted
           })
         },
         // 获取当前目录项
@@ -180,25 +166,14 @@ const store = new Vuex.Store({
         addTodo: (state, content) => {
           state.todoList.push(content)
         },
-        modifyTodo: (state, content) => {
-          state.todoList = state.todoList.map(item => {
-            if (item.id === content.id) {
-              return {
-                ...item,
-                ...content
-              }
-            }else{
-              return item
-            }
-          })
+
+        changeTodo:(state,content)=>{
+          state.todoList = content
         },
         deleteTodo: (state, content) => {
           state.todoList = state.todoList.filter(item => {
             return item.id !== content.id
           })
-        },
-        deleteTodo2:()=>{
-          
         },
         clearTodo: (state) => {
           state.todoList.length = 0
