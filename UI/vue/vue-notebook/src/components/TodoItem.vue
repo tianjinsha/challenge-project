@@ -61,7 +61,6 @@
 
 <script>
 import moment from "moment";
-import dataDictionary from "@/utils/dataDictionary";
 import todoFunc from "@/utils/todoFunc";
 import { mapGetters } from "vuex";
 export default {
@@ -99,13 +98,13 @@ export default {
       type: Object,
       default: () => {
         return {
-          id: dataDictionary.default.todoId,
-          title: dataDictionary.default.todoTitle,
-          type: dataDictionary.todoType.note,
-          pid: "",
+          id: '',
+          title: '',
+          type: '',
+          pid: '',
           star: false,
           deleted: false,
-          createTime: ""
+          createTime: ''
         };
       }
     }

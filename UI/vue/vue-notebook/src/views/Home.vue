@@ -37,12 +37,13 @@ import Menu from "../components/base/Menu.vue";
 import TodoLsit from "../components/TodoList.vue";
 import { VueEditor } from "vue2-editor";
 import { mapGetters } from "vuex";
+import indexedDB from "@/db/indexedDB";
 export default {
   name: "home",
   data() {
     return {
       title: "",
-      content: "",
+      content: ""
     };
   },
   components: {
@@ -51,13 +52,15 @@ export default {
     TodoLsit,
     VueEditor
   },
-  created() {
+  async created() {
     console.debug("enter Home page");
+    await indexedDB.initDB();
+
     this.$store.commit("todo/setCurrentMenu", {
       id: "",
       pid: ""
     });
-    this.$store.commit("setActiveMenu",'2')
+    this.$store.commit("setActiveMenu", "1");
   },
   props: {},
   methods: {},
@@ -66,7 +69,8 @@ export default {
       getCurrentTodoList: "todo/getCurrentTodoList",
       getCurrentNote: "todo/getCurrentNote"
     })
-  }
+  },
+  async destroyed() {}
 };
 </script>
 

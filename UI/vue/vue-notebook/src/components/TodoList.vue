@@ -37,8 +37,7 @@ export default {
     };
   },
   created() {
-    this.activeMenu = this.getActiveMenu;
-    console.debug("activeMenu is :" + this.activeMenu);
+    this.activeMenu = this.getActiveMenu
   },
   components: {
     TodoItem

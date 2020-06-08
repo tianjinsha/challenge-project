@@ -46,7 +46,6 @@ export default {
   },
   created(){
     this.activeMenu =this.getActiveMenu
-    console.log("current menu is "+this.activeMenu)
   },
   methods: {
     // 添加todo

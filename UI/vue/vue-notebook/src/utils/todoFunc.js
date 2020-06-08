@@ -1,7 +1,12 @@
 import store from '@/store'
 import commonFunc from './commonFunc'
 import lambda from './lambda'
+// import indexedDB from '@/db/indexedDB'
 const todoFunc = {
+
+  addTodo(){
+    
+  },
 
   /**
    * 切换 收藏
