@@ -80,50 +80,7 @@ const todoFunc = {
     let list = store.getters['todo/getTodoList']
     list = lambda.deleteTodoRecursive(list, id)
     store.commit('todo/changeTodo', list)
-  },
-
-  /**
-   * 进入下一级目录
-   * @param {*} id 
-   * @param {*} pid 
-   */
-  enterNextMenu(id, pid) {
-    console.debug("todoFunc args is " + JSON.stringify({
-      id,
-      pid
-    }))
-    store.commit('todo/setCurrentMenu', {
-      id,
-      pid
-    })
-  },
-
-  /**
-   * 进入上一级目录
-   */
-  returnPrevMenu() {
-    let flag = false
-    let prevMenu = store.getters.getPrevMenu
-    let currentMenu = store.getters.getCurrentMenu
-    if (currentMenu && currentMenu.id !== "") {
-      if (prevMenu) {
-        flag = true
-      }
-      if (prevMenu && prevMenu.id !== "") {
-        this.$store.commit("todo/setCurrentMenu", {
-          id: prevMenu.id,
-          pid: prevMenu.pid
-        });
-      } else {
-        this.$store.commit("todo/setCurrentMenu", {
-          id: "",
-          pid: ""
-        });
-      }
-    }
-    return flag
-  },
-
+  }, 
 
   /**
    * 获取最新的笔记列表

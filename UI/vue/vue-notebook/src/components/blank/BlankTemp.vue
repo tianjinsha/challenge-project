@@ -12,6 +12,7 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {},
+  computed: {},
   props: {}
 };
 </script>

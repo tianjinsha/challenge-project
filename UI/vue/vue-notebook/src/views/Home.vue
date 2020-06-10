@@ -12,7 +12,13 @@
         </el-aside>
         <el-main>
           <div class="main-wrap">
-            <TodoLsit></TodoLsit>
+            <div class="todo">
+              <!-- 搜索框 -->
+               <TodoAction></TodoAction>
+               <!-- 笔记列表 -->
+              <TodoLsit></TodoLsit>
+            </div>
+            <!-- 笔记详情 -->
             <div class="article">
               <div class="a-header">
                 <h3>{{getCurrentNote.title}}</h3>
@@ -35,6 +41,7 @@
 import Header from "../components/base/Header.vue";
 import Menu from "../components/base/Menu.vue";
 import TodoLsit from "../components/TodoList.vue";
+import TodoAction from "../components/TodoAction";
 import { VueEditor } from "vue2-editor";
 import { mapGetters } from "vuex";
 import indexedDB from "@/db/indexedDB";
@@ -50,11 +57,32 @@ export default {
     Header,
     Menu,
     TodoLsit,
+    TodoAction,
     VueEditor
   },
   async created() {
     console.debug("enter Home page");
     await indexedDB.initDB();
+
+    // await indexedDB.insert("todo", {
+    //   id: "8",
+    //   pid: "",
+    //   type: "note",
+    //   title: "测试",
+    //   deleted: false,
+    //   createTime: new Date().getTime()
+    // });
+
+    let result;
+    //  result =await indexedDB.read('todo','4')
+    // result = await indexedDB.readAll("todo");
+    let IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+    // let onlyKeyRange = IDBKeyRange.only('3');
+    let onlyKeyRange = IDBKeyRange.only("3");
+    console.error(onlyKeyRange);
+    result = await indexedDB.handleDataByCursor("todo", onlyKeyRange);
+    console.error("---result---");
+    console.error(result);
 
     this.$store.commit("todo/setCurrentMenu", {
       id: "",
@@ -105,7 +133,19 @@ export default {
   height: 100%;
   width: 100%;
 }
+// 
+.todo {
+  width: 280px;
+  border-right: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-top: 0;
+  border-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
 
+// 
 .article {
   width: 100%;
   display: flex;

@@ -1,6 +1,14 @@
 /**
  * IndexedDB 浏览器数据库
- */
+ * 
+ *数据库：IDBDatabase 对象
+ *对象仓库：IDBObjectStore 对象
+ *索引： IDBIndex 对象
+ *事务： IDBTransaction 对象
+ *操作请求：IDBRequest 对象
+ *指针： IDBCursor 对象
+ *主键集合：IDBKeyRange 对象
+*/
 
 const dbName = 'note'
 const dbVersion = 1
@@ -258,16 +266,16 @@ export default {
   /**
    * 通过索引游标操作数据, callback中要有游标移动方式
    * @param {*} table 
-   * @param {*} keyRange 
-   * @param {*} cursorIndex 
+   * @param {IDBIndex} keyRange 
+   * @param {IDBKeyRange} cursorIndex 
    */
   handleDataByIndex: async function (table, keyRange, cursorIndex) {
     try {
       let kRange = keyRange || ""
       let db = await this.openDB()
-      let store = db.transaction(table, "readwrite").objectStore(table),
-        request
-      request = store.index(cursorIndex).openCursor(kRange)
+      let store = db.transaction(table, "readwrite").objectStore(table)
+      let data = []
+      let request = store.index(cursorIndex).openCursor(kRange)
       return new Promise(resolve => {
         request.onerror = function () {
           console.error('通过索引游标获取数据报错')
@@ -276,8 +284,10 @@ export default {
         request.onsuccess = function (event) {
           let cursor = event.target.result
           if (cursor) {
-            resolve(cursor)
+            data.push(cursor.value)
+            cursor.continue()
           }
+          resolve(data)
         }
       })
     } catch (error) {
@@ -288,7 +298,7 @@ export default {
   /**
    *  通过游标操作数据
    * @param {*} table 
-   * @param {*} keyRange 
+   * @param {IDBKeyRange} keyRange 
    */
   async handleDataByCursor(table, keyRange) {
     try {
@@ -296,6 +306,7 @@ export default {
       let db = await this.openDB()
       let store = db.transaction(table, "readwrite").objectStore(table)
       let request = store.openCursor(kRange)
+      let data = []
       return new Promise(resolve => {
         request.onerror = function () {
           console.error('通过游标获取数据报错')
@@ -303,7 +314,12 @@ export default {
         }
         request.onsuccess = function (event) {
           let cursor = event.target.result
-          resolve(cursor)
+          console.error(cursor)
+          if(cursor){
+            data.push(cursor.value)
+            cursor.continue()
+          }
+          resolve(data)
         }
       })
 
@@ -340,7 +356,7 @@ export default {
       return new Promise(resolve => {
         request.onsuccess = function () {
           let cursor = event.target.result
-          if(cursor){
+          if (cursor) {
             data.push(cursor.value)
             cursor.continue()
           }

@@ -4,6 +4,7 @@
     @mouseenter="onHover('enter')"
     @mouseleave="onHover('leave')"
     :class="{ active: isActive }"
+    :style="{'width':width+'px'}"
   >
     <div class="head">
       <div class="left">
@@ -30,25 +31,48 @@
           @click.stop="starNote"
         ></i>
         <!-- 恢复文件 -->
-        <i class="el-icon-refresh-left icon" v-if="activeMenu === '4'" @click.stop="recoverTodo"></i>
+        <i
+          class="el-icon-refresh-left icon"
+          v-if="activeMenu === $DataDictionary.menuType.trash"
+          @click.stop="recoverTodo"
+        ></i>
         <!-- 移除文件 -->
         <i class="el-icon-delete icon" v-else @click.stop="removeTodo"></i>
         <!-- 彻底删除 -->
-        <i class="el-icon-delete icon" v-if="activeMenu === '4'" @click.stop="deleteTodo"></i>
+        <i
+          class="el-icon-delete icon"
+          v-if="activeMenu === $DataDictionary.menuType.trash"
+          @click.stop="deleteTodo"
+        ></i>
         <!-- 更多选项 -->
         <el-dropdown @command="more" trigger="click">
           <span class="el-dropdown-link">
             <i class="el-icon-arrow-down el-icon-more icon"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-if="activeMenu !== '4'" command="rename">重命名</el-dropdown-item>
-            <el-dropdown-item v-if="activeMenu !== '4' && content.type==='note'" command="star">
+            <el-dropdown-item
+              v-if="activeMenu !== $DataDictionary.menuType.trash"
+              command="rename"
+            >重命名</el-dropdown-item>
+            <el-dropdown-item
+              v-if="activeMenu !== $DataDictionary.menuType.trash && content.type===$DataDictionary.todoType.note"
+              command="star"
+            >
               <span v-if="!content.star">加星</span>
               <span v-else>取消加星</span>
             </el-dropdown-item>
-            <el-dropdown-item v-if="activeMenu !== '4'" command="remove">删除</el-dropdown-item>
-            <el-dropdown-item v-if="activeMenu === '4'" command="recover">恢复</el-dropdown-item>
-            <el-dropdown-item v-if="activeMenu === '4'" command="delete ">永久删除</el-dropdown-item>
+            <el-dropdown-item
+              v-if="activeMenu !== $DataDictionary.menuType.trash"
+              command="remove"
+            >删除</el-dropdown-item>
+            <el-dropdown-item
+              v-if="activeMenu === $DataDictionary.menuType.trash"
+              command="recover"
+            >恢复</el-dropdown-item>
+            <el-dropdown-item
+              v-if="activeMenu === $DataDictionary.menuType.trash"
+              command="delete "
+            >永久删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -68,13 +92,13 @@ export default {
   data() {
     return {
       dateFormat: "YYYY-MM-DD hh:mm",
-      isActive: false,
-      star: false,
-      activeMenu: "",
-      isMenu: false,
-      rename: false,
+      isActive: false, // 鼠标是否正在悬停
+      star: false, // 是否标星
+      activeMenu: "", // 判断现在在那级目录
+      isMenu: false, // 判断该项是否是目录
+      rename: false, // 是否要重命名
       title: "",
-      inputFocus: false
+      inputFocus: false // 输入框是否聚焦
     };
   },
 
@@ -82,8 +106,8 @@ export default {
     this.star = this.content.star;
     this.activeMenu = this.getActiveMenu;
     this.title = this.content.title;
-    if (this.activeMenu !== "4") {
-      if (this.content.type === "menu") {
+    if (this.activeMenu !== this.$DataDictionary.menuType.trash) {
+      if (this.content.type === this.$DataDictionary.todoType.menu) {
         this.isMenu = true;
       }
     }
@@ -98,18 +122,23 @@ export default {
       type: Object,
       default: () => {
         return {
-          id: '',
-          title: '',
-          type: '',
-          pid: '',
+          id: "",
+          pid: "",
+          type: "",
           star: false,
           deleted: false,
-          createTime: ''
+          title: "",
+          createTime: ""
         };
       }
+    },
+    width: {
+      type: [String, Number],
+      default: 280
     }
   },
   methods: {
+    // 鼠标经过
     onHover(args) {
       if (args === "enter") {
         if (!this.rename) {
@@ -119,27 +148,33 @@ export default {
         this.isActive = false;
       }
     },
+    //点击项 显示笔记或者进入下一个目录
     handle() {
-      if (this.content.type === "menu") {
-        if (this.activeMenu === "4") {
+      if (this.content.type === this.$DataDictionary.todoType.menu) {
+        if (this.activeMenu === this.$DataDictionary.menuType.trash) {
           return;
         }
         this.$emit("chanageGoBack", true);
         console.info("enter next menu");
-        todoFunc.enterNextMenu(this.content.id, this.content.pid);
-      } else if (this.content.type === "note") {
+        this.$store.commit("todo/setCurrentMenu", {
+          id: this.content.id,
+          pid: this.content.pid
+        });
+      } else if (this.content.type === this.$DataDictionary.todoType.note) {
         this.showNote(this.content.id);
       }
     },
+    // 显示当前几点的笔记
     showNote(id) {
-      console.info("current note id is {" + id + "}");
+      console.info("set current note : " + id);
       this.$store.commit("todo/setCurrentNote", id);
     },
+    // 加星
     starNote() {
       this.star = !this.star;
-      console.info("star note:" + this.star);
       todoFunc.toggleStarNote(this.content.id, this.star);
     },
+    // 删除
     removeTodo() {
       console.info("remove todo:" + this.content.id);
       todoFunc.toggleRemoveTodo(
@@ -148,6 +183,7 @@ export default {
         !this.content.deleted
       );
     },
+    // 恢复
     recoverTodo() {
       console.info("recover todo:" + this.content.id);
       todoFunc.toggleRemoveTodo(
@@ -156,10 +192,12 @@ export default {
         !this.content.deleted
       );
     },
+    // 彻底删除
     deleteTodo() {
       console.info("delete todo:" + this.content.id);
       todoFunc.deleteTodo(this.content.id);
     },
+    // 更多
     more(args) {
       console.info("more action args is " + args);
       if (args == "rename") {
@@ -172,6 +210,7 @@ export default {
         this.deleteTodo();
       }
     },
+    // 重命名结束
     endRenameTitle() {
       if (this.rename) {
         console.info("end rename title " + this.content.id);
@@ -208,7 +247,7 @@ export default {
   color: #f60;
 }
 .todo-item {
-  width: 280px;
+  // width: 280px;
   border-bottom: 1px solid #eee;
   .head {
     height: 48px;
