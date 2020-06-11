@@ -37,7 +37,10 @@ export default {
     this.$router.push({ path: "home" });
   },
   methods: {},
-  props: {}
+  props: {},
+  async destroyed() {
+    await indexedDB.closeDB();
+  }
 };
 </script>
 
