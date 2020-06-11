@@ -15,7 +15,7 @@ const dbVersion = 1
 
 export default {
   indexedDB: window.indexedDB ||
-    window.webkitindexedDB ||
+    window.webkitIndexedDB ||
     window.msIndexedDB ||
     window.mozIndexedDB,
 
@@ -347,20 +347,40 @@ export default {
     }
   },
 
-  async readAll(table) {
+  async getAll(table){
+    try {
+      let db = await this.openDB()
+      let store = db.transaction(table, "readwrite").objectStore(table)
+      let request = store.getAll()
+      return new Promise(resolve => {
+        request.onsuccess = function () {
+          let cursor = request.result
+          resolve(cursor)
+        }
+      })
+    }catch (error) {
+      console.error(error)
+      return Promise.reject([])
+    }
+
+  },
+
+  async getAll2(table) {
     try {
       let db = await this.openDB()
       let store = db.transaction(table, "readwrite").objectStore(table)
       let request = store.openCursor();
-      let data = []
+      
       return new Promise(resolve => {
+        let data = []
         request.onsuccess = function () {
           let cursor = event.target.result
           if (cursor) {
             data.push(cursor.value)
             cursor.continue()
+          }else{
+            resolve(data)
           }
-          resolve(data)
         }
       })
     } catch (error) {

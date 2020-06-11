@@ -5,29 +5,45 @@
       <el-dropdown class="dropdown" @command="addTodo" trigger="click">
         <span class="el-dropdown-link">
           <i class="add el-icon-plus"></i>
-          <span> 新文档 </span>
+          <span>新文档</span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="note">新建笔记</el-dropdown-item>
           <el-dropdown-item>新建Markdown</el-dropdown-item>
-          <el-dropdown-item command="menu">新建文件夹</el-dropdown-item>
+          <el-dropdown-item command="folder">新建文件夹</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
     <!-- 目录列表 -->
     <div class="menu-wrap">
       <ul class="menu-list">
-        <li class="menu-item" v-bind:class="{ active: activeMenu ==='1' }" @click="changeMenu('1')">
+        <li
+          class="menu-item"
+          v-bind:class="{ active: getActiveMenu === this.$DataDictionary.menuType.latest }"
+          @click="changeMenu($DataDictionary.menuType.latest)"
+        >
           <i class="el-icon-copy-document"></i> 最新文档
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ==='2' }" @click="changeMenu('2')">
+        <li
+          class="menu-item"
+          v-bind:class="{ active: getActiveMenu ===this.$DataDictionary.menuType.folder }"
+          @click="changeMenu($DataDictionary.menuType.folder)"
+        >
           <i class="el-icon-folder"></i> 我的文件夹
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ==='3' }" @click="changeMenu('3')">
+        <li
+          class="menu-item"
+          v-bind:class="{ active: getActiveMenu ===this.$DataDictionary.menuType.star }"
+          @click="changeMenu($DataDictionary.menuType.star)"
+        >
           <i class="el-icon-star-off"></i> 加星文件
         </li>
-        <li class="menu-item" v-bind:class="{ active: activeMenu ==='4' }" @click="changeMenu('4')">
+        <li
+          class="menu-item"
+          v-bind:class="{ active: getActiveMenu ===this.$DataDictionary.menuType.trash }"
+          @click="changeMenu($DataDictionary.menuType.trash)"
+        >
           <i class="el-icon-delete"></i> 回收站
         </li>
       </ul>
@@ -38,51 +54,48 @@
 <script>
 import { mapGetters } from "vuex";
 import commonFunc from "@/utils/commonFunc";
+import todoFunc from "@/utils/todoFunc";
 export default {
   data() {
-    return {
-      activeMenu:'',
-    };
+    return {};
   },
-  created(){
-    this.activeMenu =this.getActiveMenu
-  },
+  created() {},
   methods: {
     // 添加todo
     addTodo(args) {
       console.log("add todo type is: " + args);
-      let currrentMenu = this.getCurrentMenu;
-      if (args === "note") {
-        this.$store.commit("todo/addTodo", {
+      let currrentMenu = this.getCurrentFolder;
+      if (args === this.$DataDictionary.todoType.note) {
+        todoFunc.addTodo({
           id: commonFunc.uuid(),
           pid: currrentMenu.id,
-          type: "note",
-          title: "无标题文档",
+          type: this.$DataDictionary.todoType.note,
+          title: this.$DataDictionary.default.todoTitle,
           deleted: false,
           createTime: new Date().getTime()
         });
-      } else if (args === "menu") {
-        this.$store.commit("todo/addTodo", {
+      } else if (args === this.$DataDictionary.todoType.folder) {
+        todoFunc.addTodo({
           id: commonFunc.uuid(),
           pid: currrentMenu.id,
-          type: "menu",
-          title: "新建文件夹",
+          type: this.$DataDictionary.todoType.folder,
+          title: this.$DataDictionary.default.todoFolder,
           deleted: false,
           createTime: new Date().getTime()
         });
       }
     },
     // 改变目录
-    changeMenu(args){
-      this.activeMenu = args
-      console.debug("current menu is "+this.activeMenu)
-      this.$store.commit('setActiveMenu',args)
+    changeMenu(args) {
+      this.activeMenu = args;
+      console.debug("current menu is " + this.activeMenu);
+      this.$store.commit("setActiveMenu", args);
     }
   },
   computed: {
     ...mapGetters({
-      getCurrentMenu: "todo/getCurrentMenu",
-      getActiveMenu:'getActiveMenu'
+      getCurrentFolder: "todo/getCurrentFolder",
+      getActiveMenu: "getActiveMenu"
     })
   }
 };

@@ -1,11 +1,11 @@
 const data = {
   default: {
     todoId: 0,
-    todoMenu: '新建文件夹',
+    todoFolder: '新建文件夹',
     todoTitle: '无标题笔记'
   },
   todoType: {
-    menu: 'menu',
+    folder: 'folder',
     note: 'note'
   },
   menuType: {
@@ -13,6 +13,15 @@ const data = {
     folder: '2',
     star: '3',
     trash: '4'
+  },
+  todoStruct: {
+    id: '',
+    pid: '',
+    type: '',
+    title: '',
+    deleted: false,
+    star: false,
+    createTime: ''
   }
 }
 

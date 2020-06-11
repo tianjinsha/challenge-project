@@ -29,7 +29,7 @@ const lambda = {
     let _this = this
     let data = _this.getChildTodo(list, id)
     for (let i = 0; i < data.length; i++) {
-      if (data[i].type === 'menu') {
+      if (data[i].type === 'folder') {
         let temp = _this.getChildTodoRecursion(list, data[i].id)
         data.push(temp)
       }
@@ -51,7 +51,7 @@ const lambda = {
       list = list.filter(item => {
         return item.id !== data[i].id
       })
-      if (data[i].type === 'menu') {
+      if (data[i].type === 'folder') {
         list = _this.deleteTodoRecursive(list, data[i].id)
       }
     }
@@ -94,7 +94,7 @@ const lambda = {
           ...args,
           id: data[i].id,
         })
-        if (data[i].type === 'menu') {
+        if (data[i].type === 'folder') {
           list = _this.toggleChangeTodoRecursion(list, {
             ...args,
             id: data[i].id

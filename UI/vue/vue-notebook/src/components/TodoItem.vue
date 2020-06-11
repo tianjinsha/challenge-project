@@ -8,7 +8,7 @@
   >
     <div class="head">
       <div class="left">
-        <i class="el-icon-folder icon" v-if="content.type==='menu'"></i>
+        <i class="el-icon-folder icon" v-if="content.type==='folder'"></i>
         <i class="el-icon-document icon" v-if="content.type==='note'"></i>
         <div class="title">
           <el-input
@@ -19,7 +19,7 @@
             @focus="changeFocus"
             @blur="changeFocus"
           ></el-input>
-          <a v-bind:class="{ menu: isMenu }" v-else @click="handle">{{content.title}}</a>
+          <a v-bind:class="{ folder: isFolder }" v-else @click="handle">{{content.title}}</a>
         </div>
       </div>
       <div class="right" v-show="isActive">
@@ -95,7 +95,7 @@ export default {
       isActive: false, // 鼠标是否正在悬停
       star: false, // 是否标星
       activeMenu: "", // 判断现在在那级目录
-      isMenu: false, // 判断该项是否是目录
+      isFolder: false, // 判断该项是否是文件夹
       rename: false, // 是否要重命名
       title: "",
       inputFocus: false // 输入框是否聚焦
@@ -107,8 +107,8 @@ export default {
     this.activeMenu = this.getActiveMenu;
     this.title = this.content.title;
     if (this.activeMenu !== this.$DataDictionary.menuType.trash) {
-      if (this.content.type === this.$DataDictionary.todoType.menu) {
-        this.isMenu = true;
+      if (this.content.type === this.$DataDictionary.todoType.folder) {
+        this.isFolder = true;
       }
     }
   },
@@ -150,13 +150,13 @@ export default {
     },
     //点击项 显示笔记或者进入下一个目录
     handle() {
-      if (this.content.type === this.$DataDictionary.todoType.menu) {
+      if (this.content.type === this.$DataDictionary.todoType.folder) {
         if (this.activeMenu === this.$DataDictionary.menuType.trash) {
           return;
         }
         this.$emit("chanageGoBack", true);
-        console.info("enter next menu");
-        this.$store.commit("todo/setCurrentMenu", {
+        console.info("enter next folder");
+        this.$store.commit("todo/setCurrentFolder", {
           id: this.content.id,
           pid: this.content.pid
         });
@@ -266,7 +266,7 @@ export default {
         height: 100%;
         overflow: hidden;
         padding-right: 15px;
-        .menu:hover {
+        .folder:hover {
           cursor: pointer;
           text-decoration: underline;
         }

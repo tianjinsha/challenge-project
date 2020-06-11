@@ -21,24 +21,24 @@ export default {
   destroyed() {},
   methods: {
     returnBack() {
-      console.info("return prev menu");
-      let prevMenu = this.getPrevMenu;
-      let currentMenu = this.getCurrentMenu;
+      console.info("return prev folder");
+      let prevMenu = this.getPrevFolder;
+      let currentMenu = this.getCurrentFolder;
       if (currentMenu && currentMenu.id !== "") {
         if (prevMenu) {
-          console.debug("prevMenu is ");
+          console.debug("prev folder is ");
           console.debug(prevMenu);
         } else {
-          console.debug("prev Menu is top menu");
+          console.debug("prev folder is top folder");
         }
 
         if (prevMenu && prevMenu.id !== "") {
-          this.$store.commit("todo/setCurrentMenu", {
+          this.$store.commit("todo/setCurrentFolder", {
             id: prevMenu.id,
             pid: prevMenu.pid
           });
         } else {
-          this.$store.commit("todo/setCurrentMenu", {
+          this.$store.commit("todo/setCurrentFolder", {
             id: "",
             pid: ""
           });
@@ -48,8 +48,8 @@ export default {
   },
   computed: {
  ...mapGetters({
-      getPrevMenu: "todo/getPrevMenu",
-      getCurrentMenu: "todo/getCurrentMenu",
+      getPrevFolder: "todo/getPrevFolder",
+      getCurrentFolder: "todo/getCurrentFolder",
     })
   },
   props: {

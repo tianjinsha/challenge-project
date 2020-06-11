@@ -7,22 +7,29 @@ const store = new Vuex.Store({
   namespaced: true,
   state: {
     test: 'test',
-    activeMenu:'1'
+    activeMenu: '1',
+    init: false
   },
   getters: {
     getTest: (state) => {
       return state.test
     },
-    getActiveMenu:(state)=>{
-      return state.activeMenu  
-    }
+    getActiveMenu: (state) => {
+      return state.activeMenu
+    },
+    getInit: (state) => {
+      return state.init
+    },
   },
   mutations: {
     setTest: (state, content) => {
       state.test = content
     },
-    setActiveMenu:(state,content)=>{
+    setActiveMenu: (state, content) => {
       state.activeMenu = content
+    },
+    setInit: (state, content) => {
+      state.init = content
     }
   },
   actions: {},
@@ -47,7 +54,7 @@ const store = new Vuex.Store({
         todoList: [{
             id: '1',
             pid: '',
-            type: 'menu',
+            type: 'folder',
             title: '新建文件夹1',
             deleted: false,
             createTime: new Date().getTime(),
@@ -65,47 +72,47 @@ const store = new Vuex.Store({
         ]
       },
       getters: {
-        // 获取所有目录项
+        // 获取所有文件夹项
         getTodoList: (state) => {
           return state.todoList.map(item => {
             return {
               id: item.id,
               pid: item.pid,
               deleted: item.deleted,
-              star:item.star,
+              star: item.star,
               title: item.title,
               createTime: item.createTime,
-              type:item.type
+              type: item.type
             }
           })
         },
-        // 获取属于该pid下的下一级直接子目录项
+        // 获取属于该pid下的下一级直接子文件夹项
         getTodoListByPid: (state, getters) => (pid) => {
           return getters.getTodoList.find(item => {
             return item.pid === pid
           })
         },
-        // 通过id定位目录项
-        getMenuById: (state, getters) => (id) => {
+        // 通过id定位文件夹项
+        getTodoById: (state, getters) => (id) => {
           return getters.getTodoList.find(item => {
             return item.id === id
           })
         },
-        // 上一级目录项
-        getPrevMenu: (state, getters) => {
+        // 上一级文件夹项
+        getPrevFolder: (state, getters) => {
           return getters.getTodoList.find(item => {
             return item.id === state.currentMenu.pid
 
           })
         },
-        // 获取当前目录下的所有目录项和笔记项
+        // 获取当前文件夹下的所有文件夹项和笔记项
         getCurrentTodoList: (state, getters) => {
           return getters.getTodoList.filter(item => {
             return state.currentMenu.id === item.pid
           })
         },
-        // 获取当前目录项
-        getCurrentMenu: (state) => {
+        // 获取当前文件夹项
+        getCurrentFolder: (state) => {
           return state.currentMenu
         },
         // 获取当前笔记项
@@ -117,8 +124,12 @@ const store = new Vuex.Store({
         }
       },
       mutations: {
-        // 设置当前目录项（id,pid）
-        setCurrentMenu: (state, content) => {
+        // 设置todo列表
+        setTodoList: (state, content) => {
+          state.todoList = content
+        },
+        // 设置当前文件夹项（id,pid）
+        setCurrentFolder: (state, content) => {
           state.currentMenu = content
         },
         // 设置当前笔记项-通过id
@@ -131,7 +142,7 @@ const store = new Vuex.Store({
           state.todoList.push(content)
         },
 
-        changeTodo:(state,content)=>{
+        changeTodo: (state, content) => {
           state.todoList = content
         },
         deleteTodo: (state, content) => {

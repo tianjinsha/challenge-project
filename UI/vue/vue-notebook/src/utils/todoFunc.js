@@ -4,8 +4,8 @@ import lambda from './lambda'
 // import indexedDB from '@/db/indexedDB'
 const todoFunc = {
 
-  addTodo(){
-    
+  addTodo(todo){
+    store.commit("todo/addTodo", todo)
   },
 
   /**
@@ -58,7 +58,7 @@ const todoFunc = {
       deleted
     }));
     let list = store.getters['todo/getTodoList']
-    if (type === 'menu') {
+    if (type === 'folder') {
       list = lambda.toggleChangeTodoRecursion(list, {
         id,
         deleted
@@ -105,8 +105,8 @@ const todoFunc = {
     list = list.filter(item => {
       return !item.deleted
     })
-    let menuList = list
-      .filter(item => item.type === 'menu')
+    let folderList = list
+      .filter(item => item.type === 'folder')
       .sort((a, b) => {
         return new Date(b.createTime).getTime() - new Date(a.createTime).getTime()
       })
@@ -115,7 +115,7 @@ const todoFunc = {
         return new Date(b.createTime).getTime() - new Date(a.createTime).getTime()
       })
 
-    return [...menuList, ...noteList]
+    return [...folderList, ...noteList]
   },
 
   /**
