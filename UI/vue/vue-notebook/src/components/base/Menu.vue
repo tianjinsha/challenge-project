@@ -62,11 +62,11 @@ export default {
   created() {},
   methods: {
     // 添加todo
-    addTodo(args) {
+    async addTodo(args) {
       console.log("add todo type is: " + args);
       let currrentMenu = this.getCurrentFolder;
       if (args === this.$DataDictionary.todoType.note) {
-        todoFunc.addTodo({
+        await todoFunc.addTodo({
           id: commonFunc.uuid(),
           pid: currrentMenu.id,
           type: this.$DataDictionary.todoType.note,
@@ -75,7 +75,7 @@ export default {
           createTime: new Date().getTime()
         });
       } else if (args === this.$DataDictionary.todoType.folder) {
-        todoFunc.addTodo({
+        await todoFunc.addTodo({
           id: commonFunc.uuid(),
           pid: currrentMenu.id,
           type: this.$DataDictionary.todoType.folder,

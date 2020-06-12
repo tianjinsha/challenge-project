@@ -1,11 +1,14 @@
 import store from '@/store'
 import commonFunc from './commonFunc'
 import lambda from './lambda'
-// import indexedDB from '@/db/indexedDB'
+import indexedDB from '@/db/indexedDB'
 const todoFunc = {
 
-  addTodo(todo){
+  async addTodo(todo){
     store.commit("todo/addTodo", todo)
+    await indexedDB.initDB()
+    await indexedDB.insert('todo',todo)
+    await indexedDB.closeDB()
   },
 
   /**
@@ -13,7 +16,7 @@ const todoFunc = {
    * @param {*} id 
    * @param {*} star 
    */
-  toggleStarNote(id, star) {
+  async toggleStarNote(id, star) {
     console.debug("todoFunc toggleStarNote args is " + JSON.stringify({
       id,
       star
@@ -24,6 +27,10 @@ const todoFunc = {
       star
     })
     store.commit('todo/changeTodo', list)
+    let todo = list.find(item=>item.id === id)
+    await indexedDB.initDB()
+    await indexedDB.update('todo',todo)
+    await indexedDB.closeDB()
   },
 
   /**
@@ -31,7 +38,7 @@ const todoFunc = {
    * @param {*} id 
    * @param {*} title 
    */
-  renameTodo(id,title){
+  async renameTodo(id,title){
     console.debug("todoFunc toggleStarNote args is " + JSON.stringify({
       id,
       title
@@ -42,6 +49,10 @@ const todoFunc = {
       title
     })
     store.commit('todo/changeTodo', list)
+    let todo = list.find(item=>item.id === id)
+    await indexedDB.initDB()
+    await indexedDB.update('todo',todo)
+    await indexedDB.closeDB()
   },
 
 
@@ -51,7 +62,7 @@ const todoFunc = {
    * @param {*} type 
    * @param {*} deleted 
    */
-  toggleRemoveTodo(id, type, deleted) {
+  async toggleRemoveTodo(id, type, deleted) {
     console.debug("todoFunc toggleRemoveTodo args is " + JSON.stringify({
       id,
       type,
@@ -70,16 +81,23 @@ const todoFunc = {
       })
     }
     store.commit('todo/changeTodo', list)
+    let todo = list.find(item=>item.id === id)
+    await indexedDB.initDB()
+    await indexedDB.update('todo',todo)
+    await indexedDB.closeDB()
   },
 
   /**
    * 彻底删除
    * @param {*} id 
    */
-  deleteTodo(id) {
+  async deleteTodo(id) {
     let list = store.getters['todo/getTodoList']
     list = lambda.deleteTodoRecursive(list, id)
     store.commit('todo/changeTodo', list)
+    await indexedDB.initDB()
+    await indexedDB.delete('todo',id)
+    await indexedDB.closeDB()
   }, 
 
   /**

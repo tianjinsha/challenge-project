@@ -170,53 +170,53 @@ export default {
       this.$store.commit("todo/setCurrentNote", id);
     },
     // 加星
-    starNote() {
+    async starNote() {
       this.star = !this.star;
-      todoFunc.toggleStarNote(this.content.id, this.star);
+      await todoFunc.toggleStarNote(this.content.id, this.star);
     },
     // 删除
-    removeTodo() {
+    async removeTodo() {
       console.info("remove todo:" + this.content.id);
-      todoFunc.toggleRemoveTodo(
+      await todoFunc.toggleRemoveTodo(
         this.content.id,
         this.content.type,
         !this.content.deleted
       );
     },
     // 恢复
-    recoverTodo() {
+    async recoverTodo() {
       console.info("recover todo:" + this.content.id);
-      todoFunc.toggleRemoveTodo(
+      await todoFunc.toggleRemoveTodo(
         this.content.id,
         this.content.type,
         !this.content.deleted
       );
     },
     // 彻底删除
-    deleteTodo() {
+    async deleteTodo() {
       console.info("delete todo:" + this.content.id);
-      todoFunc.deleteTodo(this.content.id);
+      await todoFunc.deleteTodo(this.content.id);
     },
     // 更多
-    more(args) {
+    async more(args) {
       console.info("more action args is " + args);
       if (args == "rename") {
         this.rename = true;
       } else if (args === "star") {
-        this.starNote();
+        await this.starNote();
       } else if (args === "remove") {
-        this.removeTodo();
+        await this.removeTodo();
       } else if (args === "delete") {
-        this.deleteTodo();
+        await this.deleteTodo();
       }
     },
     // 重命名结束
-    endRenameTitle() {
+    async endRenameTitle() {
       if (this.rename) {
         console.info("end rename title " + this.content.id);
         if (!this.inputFocus) {
           if (this.content.title !== this.title) {
-            todoFunc.renameTodo(this.content.id, this.title);
+            await todoFunc.renameTodo(this.content.id, this.title);
           }
           this.rename = false;
         }
