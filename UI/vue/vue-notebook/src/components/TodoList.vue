@@ -1,12 +1,14 @@
 <template>
   <!-- 笔记列表 -->
   <div class="todo-list">
-    <div class="todo-wrap">
-      <TodoItem
-        v-for="item in todoList"
-        :key="item.id"
-        :content="item"
-      ></TodoItem>
+    <div class="todo-wrap" v-if="isEmpty">
+      <div class="empty">
+        <p>没有找到文件</p>
+        <el-button @click="addNote">新建笔记</el-button>
+      </div>
+    </div>
+    <div class="todo-wrap" v-else>
+      <TodoItem v-for="item in todoList" :key="item.id" :content="item"></TodoItem>
     </div>
   </div>
 </template>
@@ -15,6 +17,7 @@
 import TodoItem from "./TodoItem";
 import { mapGetters } from "vuex";
 import todoFunc from "@/utils/todoFunc";
+import commonFunc from "@/utils/commonFunc";
 
 export default {
   name: "TodoList",
@@ -48,6 +51,17 @@ export default {
       }
       return list;
     },
+    async addNote() {
+      let currrentMenu = this.getCurrentFolder;
+      await todoFunc.addTodo({
+        id: commonFunc.uuid(),
+        pid: currrentMenu.id,
+        type: this.$DataDictionary.todoType.note,
+        title: this.$DataDictionary.default.todoTitle,
+        deleted: false,
+        createTime: new Date().getTime()
+      });
+    }
   },
   computed: {
     todoList() {
@@ -55,7 +69,14 @@ export default {
     },
     ...mapGetters({
       getActiveMenu: "getActiveMenu",
+      getCurrentFolder: "todo/getCurrentFolder"
     }),
+    isEmpty() {
+      if (this.todoList && this.todoList.length > 0) {
+        return false;
+      }
+      return true;
+    }
   }
 };
 </script>
@@ -75,5 +96,16 @@ export default {
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  .empty {
+    font-size: 12px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      margin: 8px 0;
+    }
+  }
 }
 </style>

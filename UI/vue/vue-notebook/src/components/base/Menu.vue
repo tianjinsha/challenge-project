@@ -11,7 +11,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="note">新建笔记</el-dropdown-item>
           <el-dropdown-item>新建Markdown</el-dropdown-item>
-          <el-dropdown-item command="folder">新建文件夹</el-dropdown-item>
+          <el-dropdown-item command="folder" v-show="getActiveMenu ===this.$DataDictionary.menuType.folder">新建文件夹</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -66,6 +66,7 @@ export default {
       console.log("add todo type is: " + args);
       let currrentMenu = this.getCurrentFolder;
       if (args === this.$DataDictionary.todoType.note) {
+         this.$store.commit("setActiveMenu", this.$DataDictionary.menuType.folder)
         await todoFunc.addTodo({
           id: commonFunc.uuid(),
           pid: currrentMenu.id,
