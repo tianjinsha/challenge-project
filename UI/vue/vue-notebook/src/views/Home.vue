@@ -20,15 +20,7 @@
             </div>
             <!-- 笔记详情 -->
             <div class="article">
-              <div class="a-header">
-                <h3>{{getCurrentNote.title}}</h3>
-                <div class="a-action">
-                  <el-button>保存</el-button>
-                </div>
-              </div>
-              <div class="a-editor">
-                <vue-editor v-model="getCurrentNote.content"></vue-editor>
-              </div>
+              <TodoPanel :noteId="getCurrentNote.id"></TodoPanel>
             </div>
           </div>
         </el-main>
@@ -42,7 +34,7 @@ import Header from "../components/base/Header.vue";
 import Menu from "../components/base/Menu.vue";
 import TodoLsit from "../components/TodoList.vue";
 import TodoAction from "../components/TodoAction";
-import { VueEditor } from "vue2-editor";
+import TodoPanel from "../components/TodoPanel";
 import { mapGetters } from "vuex";
 export default {
   name: "home",
@@ -57,7 +49,7 @@ export default {
     Menu,
     TodoLsit,
     TodoAction,
-    VueEditor
+    TodoPanel
   },
   async created() {
     console.debug("enter Home page");
@@ -123,54 +115,7 @@ export default {
 
 //
 .article {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  .a-header {
-    height: 80px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    h3 {
-      height: 80px;
-      line-height: 80px;
-      padding: 0 10px;
-      flex: 1 0 auto;
-      color: #444;
-    }
-    .a-action {
-      padding: 0 10px;
-      height: 80px;
-      line-height: 80px;
-    }
-  }
-  .a-editor {
-    flex: 1 0 auto;
-    width: 100%;
-  }
-}
-.quillWrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  .ql-container {
-    width: 100%;
-    position: relative;
-    flex: 1 0 auto;
-    height: auto;
-    border: none !important;
-    .ql-editor {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-  }
-}
-.ql-toolbar.ql-snow {
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-bottom: 1px solid #eee !important;
+  
+  flex: 1 1 auto;
 }
 </style>

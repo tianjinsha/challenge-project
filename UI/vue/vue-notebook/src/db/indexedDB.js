@@ -228,7 +228,7 @@ export default {
    * @param {*} keyValue 
    * @param {*} indexCursor 
    */
-  get: async function (table, keyValue, indexCursor) {
+  handleData: async function (table, keyValue, indexCursor) {
     try {
       let db = await this.openDB()
       let store = db
@@ -329,7 +329,7 @@ export default {
     }
   },
 
-  async read(table, id) {
+  async get(table, id) {
     try {
       let db = await this.openDB()
       let store = db.transaction(table, "readwrite").objectStore(table)

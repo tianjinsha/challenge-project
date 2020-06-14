@@ -3,7 +3,7 @@
     class="todo-item"
     @mouseenter="onHover('enter')"
     @mouseleave="onHover('leave')"
-    :class="{ active: isActive }"
+    :class="{ active: isActive,click:isClicked }"
     :style="{'width':width+'px'}"
   >
     <div class="head">
@@ -27,7 +27,7 @@
         <i
           class="icon"
           v-bind:class="{'el-icon-star-off':!star,'el-icon-star-on':this.star,'star':star}"
-          v-if="content.type==='note' && activeMenu !== '4'"
+          v-if="content.type==='note' && activeMenu !== $DataDictionary.menuType.trash"
           @click.stop="starNote"
         ></i>
         <!-- 恢复文件 -->
@@ -229,10 +229,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getActiveMenu: "getActiveMenu"
+      getActiveMenu: "getActiveMenu",
+      getCurrentNote: "todo/getCurrentNote"
     }),
     createTime() {
       return moment(this.content.createTime).format(this.dateFormat);
+    },
+    isClicked() {
+      if (this.content.id === this.getCurrentNote.id) {
+        return true;
+      }
+      return false;
     }
   },
   destroyed() {}
@@ -241,13 +248,15 @@ export default {
 
 <style scoped lang="less">
 .active {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(57, 141, 238, 0.05);
+}
+.click {
+  background: rgba(57, 141, 238, 0.3);
 }
 .star {
   color: #f60;
 }
 .todo-item {
-  // width: 280px;
   border-bottom: 1px solid #eee;
   .head {
     height: 48px;

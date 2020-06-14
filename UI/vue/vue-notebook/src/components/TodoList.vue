@@ -2,7 +2,11 @@
   <!-- 笔记列表 -->
   <div class="todo-list">
     <div class="todo-wrap">
-      <TodoItem v-for="item in todoList" :key="item.id" :content="item"></TodoItem>
+      <TodoItem
+        v-for="item in todoList"
+        :key="item.id"
+        :content="item"
+      ></TodoItem>
     </div>
   </div>
 </template>
@@ -43,15 +47,15 @@ export default {
           break;
       }
       return list;
-    }
+    },
   },
   computed: {
     todoList() {
       return this.selectTodoList(this.getActiveMenu);
     },
     ...mapGetters({
-      getActiveMenu: "getActiveMenu"
-    })
+      getActiveMenu: "getActiveMenu",
+    }),
   }
 };
 </script>
